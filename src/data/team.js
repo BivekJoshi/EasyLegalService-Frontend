@@ -1,8 +1,9 @@
 export const TEAM = [
   {
     initials: 'AS',
-    name: 'Adv. Aarav Sharma',
-    firstName: 'Aarav',
+    name: 'Adv. Alina Maharjan',
+    firstName: 'Alina',
+    photo:"../../assets/team/alina.jpeg",
     role: 'Founding Partner',
     bio: 'Corporate, M&A and FDI advisor for 18+ years. Former counsel to two listed companies.',
     tags: ['Corporate', 'M&A', 'FDI'],

@@ -5,6 +5,25 @@ import MagneticButton from '../ui/MagneticButton'
 import { TEAM, TEAM_META } from '../../data/team'
 import './Team.css'
 
+/* Eagerly load any image dropped into src/assets/team/ or src/assets/Teams/
+ * and key by basename so members can reference photos by any path string
+ * ending in the filename. */
+const photoModules = {
+  ...import.meta.glob('../../assets/team/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}', { eager: true }),
+  ...import.meta.glob('../../assets/Teams/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}', { eager: true }),
+}
+const photoByName = Object.fromEntries(
+  Object.entries(photoModules).map(([path, mod]) => [
+    path.split('/').pop().toLowerCase(),
+    mod.default ?? mod,
+  ])
+)
+const resolvePhoto = (p) => {
+  if (!p) return null
+  const basename = p.split('/').pop().toLowerCase()
+  return photoByName[basename] ?? null
+}
+
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
   show: (i) => ({
@@ -55,7 +74,9 @@ export default function Team() {
 
         {/* Member cards */}
         <div className="team">
-          {TEAM.map((m, i) => (
+          {TEAM.map((m, i) => {
+            const photoSrc = resolvePhoto(m.photo)
+            return (
             <motion.article
               key={m.name}
               className={`member ${m.featured ? 'is-featured' : ''}`}
@@ -69,8 +90,23 @@ export default function Team() {
             >
               {m.featured && <span className="member__featured-strip" aria-hidden />}
 
-              <div className="member__photo">
-                <div className="member__photo-pattern" aria-hidden />
+              <div className={`member__photo ${photoSrc ? 'has-image' : ''}`}>
+                {photoSrc ? (
+                  <>
+                    <img
+                      src={photoSrc}
+                      alt={m.name}
+                      className="member__img"
+                      loading="lazy"
+                    />
+                    <div className="member__img-overlay" aria-hidden />
+                  </>
+                ) : (
+                  <>
+                    <div className="member__photo-pattern" aria-hidden />
+                    <span className="member__initials">{m.initials}</span>
+                  </>
+                )}
 
                 {/* Years badge */}
                 <div className="member__years">
@@ -86,8 +122,6 @@ export default function Team() {
                 >
                   <Icon name="linkedin" size={14} />
                 </a>
-
-                <span className="member__initials">{m.initials}</span>
 
                 {/* Corner ornaments */}
                 <span className="member__corner member__corner--bl" aria-hidden />
@@ -125,7 +159,8 @@ export default function Team() {
                 </a>
               </div>
             </motion.article>
-          ))}
+            )
+          })}
         </div>
 
         {/* Bottom footer CTA */}
