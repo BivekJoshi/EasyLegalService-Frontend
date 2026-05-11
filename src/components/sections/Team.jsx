@@ -1,28 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import Icon from '../ui/Icon'
 import MagneticButton from '../ui/MagneticButton'
-import { TEAM, TEAM_META } from '../../data/team'
+import { TEAM, TEAM_META, resolveTeamPhoto } from '../../data/team'
 import './Team.css'
-
-/* Eagerly load any image dropped into src/assets/team/ or src/assets/Teams/
- * and key by basename so members can reference photos by any path string
- * ending in the filename. */
-const photoModules = {
-  ...import.meta.glob('../../assets/team/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}', { eager: true }),
-  ...import.meta.glob('../../assets/Teams/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}', { eager: true }),
-}
-const photoByName = Object.fromEntries(
-  Object.entries(photoModules).map(([path, mod]) => [
-    path.split('/').pop().toLowerCase(),
-    mod.default ?? mod,
-  ])
-)
-const resolvePhoto = (p) => {
-  if (!p) return null
-  const basename = p.split('/').pop().toLowerCase()
-  return photoByName[basename] ?? null
-}
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -75,90 +57,96 @@ export default function Team() {
         {/* Member cards */}
         <div className="team">
           {TEAM.map((m, i) => {
-            const photoSrc = resolvePhoto(m.photo)
+            const photoSrc = resolveTeamPhoto(m.photo)
             return (
-            <motion.article
-              key={m.name}
-              className={`member ${m.featured ? 'is-featured' : ''}`}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              whileHover={{ y: -8 }}
-              transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-            >
-              {m.featured && <span className="member__featured-strip" aria-hidden />}
-
-              <div className={`member__photo ${photoSrc ? 'has-image' : ''}`}>
-                {photoSrc ? (
-                  <>
-                    <img
-                      src={photoSrc}
-                      alt={m.name}
-                      className="member__img"
-                      loading="lazy"
-                    />
-                    <div className="member__img-overlay" aria-hidden />
-                  </>
-                ) : (
-                  <>
-                    <div className="member__photo-pattern" aria-hidden />
-                    <span className="member__initials">{m.initials}</span>
-                  </>
-                )}
-
-                {/* Years badge */}
-                <div className="member__years">
-                  <span className="member__years-num">{m.years}</span>
-                  <span className="member__years-unit">+ yrs</span>
-                </div>
-
-                {/* LinkedIn link */}
-                <a
-                  className="member__social"
-                  href="#"
-                  aria-label={`${m.name} on LinkedIn`}
+              <motion.div
+                key={m.slug ?? m.name}
+                custom={i}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.3 }}
+                whileHover={{ y: -8 }}
+                transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+              >
+                <Link
+                  to={`/team/${m.slug}`}
+                  className={`member ${m.featured ? 'is-featured' : ''}`}
+                  aria-label={`View ${m.firstName}'s profile`}
                 >
-                  <Icon name="linkedin" size={14} />
-                </a>
+                  {m.featured && <span className="member__featured-strip" aria-hidden />}
 
-                {/* Corner ornaments */}
-                <span className="member__corner member__corner--bl" aria-hidden />
-                <span className="member__corner member__corner--br" aria-hidden />
+                  <div className={`member__photo ${photoSrc ? 'has-image' : ''}`}>
+                    {photoSrc ? (
+                      <>
+                        <img
+                          src={photoSrc}
+                          alt={m.name}
+                          className="member__img"
+                          loading="lazy"
+                        />
+                        <div className="member__img-overlay" aria-hidden />
+                      </>
+                    ) : (
+                      <>
+                        <div className="member__photo-pattern" aria-hidden />
+                        <span className="member__initials">{m.initials}</span>
+                      </>
+                    )}
 
-                <div className="member__shine" aria-hidden />
-              </div>
+                    {/* Years badge */}
+                    <div className="member__years">
+                      <span className="member__years-num">{m.years}</span>
+                      <span className="member__years-unit">+ yrs</span>
+                    </div>
 
-              <div className="member__info">
-                <div className="member__role">
-                  {m.featured && <Icon name="star" size={11} />}
-                  {m.role}
-                </div>
-                <h3>{m.name}</h3>
-                <p className="member__bio">{m.bio}</p>
+                    {/* LinkedIn link */}
+                    <a
+                      className="member__social"
+                      href={m.linkedin || '#'}
+                      aria-label={`${m.name} on LinkedIn`}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Icon name="linkedin" size={14} />
+                    </a>
 
-                <div className="member__tags">
-                  {m.tags.map((t) => <span key={t}>{t}</span>)}
-                </div>
+                    {/* Corner ornaments */}
+                    <span className="member__corner member__corner--bl" aria-hidden />
+                    <span className="member__corner member__corner--br" aria-hidden />
 
-                {/* Meta row — bar council + languages */}
-                <div className="member__meta-row">
-                  <div className="member__meta-cell" title="Nepal Bar Association">
-                    <Icon name="shield" size={12} />
-                    <span>{m.barCouncil}</span>
+                    <div className="member__shine" aria-hidden />
                   </div>
-                  <div className="member__meta-cell" title="Languages">
-                    <Icon name="globe" size={12} />
-                    <span>{m.languages.join(' · ')}</span>
-                  </div>
-                </div>
 
-                <a className="member__cta" href="#contact">
-                  Talk to {m.firstName} <Icon name="arrow" size={12} />
-                </a>
-              </div>
-            </motion.article>
+                  <div className="member__info">
+                    <div className="member__role">
+                      {m.featured && <Icon name="star" size={11} />}
+                      {m.role}
+                    </div>
+                    <h3>{m.name}</h3>
+                    <p className="member__bio">{m.bio}</p>
+
+                    <div className="member__tags">
+                      {m.tags.map((t) => <span key={t}>{t}</span>)}
+                    </div>
+
+                    {/* Meta row — bar council + languages */}
+                    <div className="member__meta-row">
+                      <div className="member__meta-cell" title="Nepal Bar Association">
+                        <Icon name="shield" size={12} />
+                        <span>{m.barCouncil}</span>
+                      </div>
+                      <div className="member__meta-cell" title="Languages">
+                        <Icon name="globe" size={12} />
+                        <span>{m.languages.join(' · ')}</span>
+                      </div>
+                    </div>
+
+                    <span className="member__cta">
+                      View {m.firstName}'s profile <Icon name="arrow" size={12} />
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
             )
           })}
         </div>

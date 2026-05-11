@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
 
+/* Module-scoped instance so callers can scrollTo from anywhere (e.g. on
+ * route change). null when Lenis is disabled (reduced motion) or not mounted. */
+let lenisInstance = null
+export const getLenis = () => lenisInstance
+
 /**
  * Mounts a single Lenis instance for buttery smooth scroll.
  * Disabled when the user prefers reduced motion.
@@ -15,6 +20,7 @@ export function useLenis() {
       smoothWheel: true,
       smoothTouch: false,
     })
+    lenisInstance = lenis
 
     let frame
     const raf = (time) => {
@@ -41,6 +47,7 @@ export function useLenis() {
       cancelAnimationFrame(frame)
       document.removeEventListener('click', onAnchor)
       lenis.destroy()
+      lenisInstance = null
     }
   }, [])
 }

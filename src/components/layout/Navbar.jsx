@@ -1,13 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Icon from '../ui/Icon'
 import MagneticButton from '../ui/MagneticButton'
 import { NAV_LINKS, CONTACT } from '../../data/nav'
 import { PRACTICE_AREAS } from '../../data/practice'
 import './Navbar.css'
 
+/* Smart anchor: when on a sub-route, navigate to "/" first then scroll. */
+function useAnchorNavigate() {
+  const location = useLocation()
+  const navigate = useNavigate()
+  return (href) => (e) => {
+    if (!href?.startsWith('#') || href.length < 2) return
+    if (location.pathname === '/') return // let Lenis intercept handle smooth scroll
+    e.preventDefault()
+    navigate('/' + href)
+  }
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const navigateAnchor = useAnchorNavigate()
   const [open, setOpen] = useState(false)
   const [megaOpen, setMegaOpen] = useState(false)
   const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false })
@@ -64,7 +78,11 @@ export default function Navbar() {
       <header className={`nav ${scrolled ? 'is-scrolled' : ''}`}>
         <div className="container nav__inner">
           {/* Animated brand */}
-          <a className="brand" href="#home" onClick={close}>
+          <a
+            className="brand"
+            href="#home"
+            onClick={(e) => { navigateAnchor('#home')(e); close() }}
+          >
             <span className="brand__mark">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
                 strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -97,7 +115,7 @@ export default function Navbar() {
                   }}
                   onMouseLeave={l.hasMega ? closeMega : undefined}
                 >
-                  <a href={l.href}>
+                  <a href={l.href} onClick={navigateAnchor(l.href)}>
                     {l.label}
                     {l.hasMega && <Icon name="arrowDn" size={12} />}
                   </a>
@@ -122,7 +140,11 @@ export default function Navbar() {
                       <div className="eyebrow">Practice areas</div>
                       <h3>End-to-end legal counsel.</h3>
                       <p>Eight focused practices — each staffed by domain specialists.</p>
-                      <a className="mega__cta" href="#practice">
+                      <a
+                        className="mega__cta"
+                        href="#practice"
+                        onClick={navigateAnchor('#practice')}
+                      >
                         View all areas <Icon name="arrow" size={14} />
                       </a>
                     </div>
@@ -131,6 +153,7 @@ export default function Navbar() {
                         <motion.a
                           key={a.title}
                           href="#practice"
+                          onClick={navigateAnchor('#practice')}
                           className="mega__item"
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -156,7 +179,12 @@ export default function Navbar() {
             <a className="nav__phone" href={`tel:${CONTACT.phoneTel}`}>
               <Icon name="phone" /> Call
             </a>
-            <MagneticButton href="#contact" className="btn btn--primary nav__book" strength={0.25}>
+            <MagneticButton
+              href="#contact"
+              onClick={navigateAnchor('#contact')}
+              className="btn btn--primary nav__book"
+              strength={0.25}
+            >
               Book consultation <Icon name="arrow" />
             </MagneticButton>
             <button
@@ -198,7 +226,10 @@ export default function Navbar() {
                       show:   { opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut' } },
                     }}
                   >
-                    <a href={l.href} onClick={close}>
+                    <a
+                      href={l.href}
+                      onClick={(e) => { navigateAnchor(l.href)(e); close() }}
+                    >
                       <span className="nav__mobile-num">0{i + 1}</span>
                       {l.label}
                       <Icon name="arrow" size={18} />
@@ -213,7 +244,11 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <a className="btn btn--primary" href="#contact" onClick={close}>
+                <a
+                  className="btn btn--primary"
+                  href="#contact"
+                  onClick={(e) => { navigateAnchor('#contact')(e); close() }}
+                >
                   Free consultation <Icon name="arrow" />
                 </a>
                 <a className="nav__mobile-link" href={`tel:${CONTACT.phoneTel}`}>
