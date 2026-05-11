@@ -1,0 +1,97 @@
+.process-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.process-orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.process-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+.process-orb--a {
+  width: 380px; height: 380px;
+  background: var(--gold-500);
+  top: -80px; right: -80px;
+}
+.process-orb--b {
+  width: 340px; height: 340px;
+  background: var(--navy-600);
+  bottom: -100px; left: -100px;
+}
+
+.process {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+@media (max-width: 960px) { .process { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .process { grid-template-columns: 1fr; } }
+
+.process__rail {
+  position: absolute;
+  top: 70px;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(201, 165, 92, .4), transparent);
+  z-index: 0;
+}
+@media (max-width: 960px) { .process__rail { display: none; } }
+
+.step {
+  position: relative;
+  padding: 28px 24px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  z-index: 1;
+}
+.step:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(201, 165, 92, .45);
+}
+
+.step__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.step__num {
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--gold-500);
+  opacity: 0.4;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: opacity .3s, color .3s;
+}
+.step:hover .step__num { opacity: 1; color: var(--gold-400); }
+
+.step__icon {
+  width: 50px; height: 50px;
+  border-radius: 12px;
+  background: rgba(201, 165, 92, .15);
+  border: 1px solid rgba(201, 165, 92, .3);
+  color: var(--gold-400);
+  display: grid; place-items: center;
+  transition: transform .35s var(--ease-back);
+}
+.step:hover .step__icon { transform: rotate(-8deg) scale(1.1); }
+.step__icon svg { width: 24px; height: 24px; }
+
+.step h3 { color: #fff; font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.93rem; color: #c4cbdb; margin: 0; }

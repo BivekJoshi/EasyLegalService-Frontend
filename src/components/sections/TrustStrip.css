@@ -1,0 +1,15 @@
+.strip {
+  background: var(--cream);
+  border-block: 1px solid var(--line);
+  padding-block: 32px;
+  color: var(--navy-800);
+}
+.strip__label {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 22px;
+}

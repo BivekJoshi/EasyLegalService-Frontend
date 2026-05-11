@@ -1,0 +1,106 @@
+.areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.area {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 32px 28px 26px;
+  transition: box-shadow .4s var(--ease), border-color .4s var(--ease);
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+}
+.area:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.area__glow {
+  position: absolute;
+  inset: auto -40% -50% auto;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 165, 92, .25), transparent 70%);
+  transform: scale(0.3);
+  transition: transform .55s var(--ease);
+  z-index: 0;
+}
+.area:hover .area__glow { transform: scale(1.6); }
+
+.area__num {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  color: var(--gold-500);
+  font-weight: 700;
+  z-index: 1;
+}
+
+.area__icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(140deg, var(--navy-900), var(--navy-700));
+  color: var(--gold-400);
+  display: grid; place-items: center;
+  margin-bottom: 20px;
+  position: relative; z-index: 1;
+  transition: transform .45s var(--ease-back);
+}
+.area:hover .area__icon { transform: rotate(-8deg) scale(1.06); }
+.area__icon svg { width: 26px; height: 26px; }
+
+.area h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  position: relative; z-index: 1;
+}
+.area p {
+  font-size: 0.94rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+
+.area__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+  position: relative; z-index: 1;
+}
+.area__tags span {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--navy-800);
+  border: 1px solid var(--line);
+  transition: background .25s, color .25s;
+}
+.area:hover .area__tags span {
+  background: var(--white);
+  border-color: rgba(201, 165, 92, .35);
+}
+
+.area__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  position: relative; z-index: 1;
+  transition: gap var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.area__link svg { width: 14px; height: 14px; transition: transform var(--dur) var(--ease); }
+.area__link:hover { color: var(--gold-500); gap: 12px; }
+.area__link:hover svg { transform: translateX(3px); }

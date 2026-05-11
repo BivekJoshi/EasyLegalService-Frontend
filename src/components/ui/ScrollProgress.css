@@ -1,0 +1,22 @@
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+.scroll-progress__bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--gold-500), var(--gold-300), var(--gold-500));
+  background-size: 200% 100%;
+  transform-origin: left center;
+  animation: progress-shine 4s linear infinite;
+}
+@keyframes progress-shine {
+  from { background-position: 0% 0; }
+  to   { background-position: 200% 0; }
+}
