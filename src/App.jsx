@@ -9,10 +9,12 @@ import {
 } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import TeamMemberPage from './pages/TeamMemberPage'
+import NotFoundPage from './pages/NotFoundPage'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import ScrollProgress from './components/ui/ScrollProgress'
 import Loader from './components/ui/Loader'
+import DevCredit from './components/ui/DevCredit'
 import { useReveal } from './hooks/useReveal'
 import { useLenis, getLenis } from './hooks/useLenis'
 
@@ -79,9 +81,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/team/:slug" element={<TeamMemberRoute />} />
-        <Route path="*" element={<HomePage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
+      <DevCredit />
     </BrowserRouter>
   )
 }

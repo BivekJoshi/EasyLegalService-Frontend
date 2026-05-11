@@ -1,0 +1,112 @@
+/* Fixed dev-credit badge — sits at the bottom-right corner of every page. */
+
+.dev-credit {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 44;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px 7px 7px;
+  border-radius: 999px;
+  background: rgba(3, 8, 28, .82);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  transition: background var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+.dev-credit:hover {
+  background: rgba(3, 8, 28, .94);
+  border-color: rgba(201, 165, 92, .55);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .45);
+}
+.dev-credit:focus-visible {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 3px;
+}
+
+/* Logo disc — holds the bivek.svg avatar */
+.dev-credit__mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex: none;
+  background: linear-gradient(140deg, #f4e3b6 0%, #c9a55c 60%, #8a6a2c 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .35),
+    inset 0 -3px 6px rgba(0, 0, 0, .2);
+}
+.dev-credit__logo {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform var(--dur) var(--ease);
+}
+.dev-credit:hover .dev-credit__logo {
+  transform: scale(1.08);
+}
+
+.dev-credit__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1;
+  min-width: 0;
+}
+.dev-credit__cap {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-300);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.dev-credit__name {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.dev-credit__arrow {
+  width: 12px;
+  height: 12px;
+  color: var(--gold-400);
+  flex: none;
+  transition: transform var(--dur) var(--ease);
+}
+.dev-credit:hover .dev-credit__arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Mobile — keep visible but compact (monogram + arrow only, text via aria-label) */
+@media (max-width: 540px) {
+  .dev-credit {
+    padding: 6px 10px 6px 6px;
+    gap: 6px;
+  }
+  .dev-credit__text { display: none; }
+  .dev-credit__mark { width: 28px; height: 28px; }
+  .dev-credit__arrow { width: 11px; height: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dev-credit { transition: none; }
+  .dev-credit:hover { transform: none; }
+}
