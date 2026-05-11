@@ -3,11 +3,12 @@ import { useEffect } from 'react'
 /**
  * Adds .is-visible to elements with .reveal once they enter the viewport.
  * Watches the DOM for new .reveal nodes so reveals keep working after lazy
- * component mounts.
+ * component mounts. Pass `enabled=false` to delay observation (e.g. while a
+ * loader is showing).
  */
-export function useReveal() {
+export function useReveal(enabled = true) {
   useEffect(() => {
-    if (!('IntersectionObserver' in window)) return
+    if (!enabled || !('IntersectionObserver' in window)) return
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -30,5 +31,5 @@ export function useReveal() {
     mo.observe(document.body, { childList: true, subtree: true })
 
     return () => { io.disconnect(); mo.disconnect() }
-  }, [])
+  }, [enabled])
 }

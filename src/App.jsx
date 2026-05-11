@@ -1,4 +1,5 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'motion/react'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
@@ -12,15 +13,34 @@ import Testimonials from './components/sections/Testimonials'
 import CTA from './components/sections/CTA'
 import Contact from './components/sections/Contact'
 import ScrollProgress from './components/ui/ScrollProgress'
+import Loader from './components/ui/Loader'
 import { useReveal } from './hooks/useReveal'
 import { useLenis } from './hooks/useLenis'
 
+const LOADER_MS = 3000
+
 export default function App() {
+  const [loading, setLoading] = useState(true)
+
   useLenis()
-  useReveal()
+  useReveal(!loading)
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), LOADER_MS)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = loading ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [loading])
 
   return (
     <>
+      <AnimatePresence>
+        {loading && <Loader key="loader" duration={LOADER_MS} />}
+      </AnimatePresence>
+
       <ScrollProgress />
       <Navbar />
       <main>
