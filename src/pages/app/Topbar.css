@@ -16,37 +16,8 @@
   padding: 0 clamp(1rem, 2vw, 2rem);
 }
 
-.topbar__burger {
-  display: none;
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  color: var(--text-strong);
-  align-items: center;
-  justify-content: center;
-  transition: background var(--dur) var(--ease);
-}
-.topbar__burger:hover { background: rgba(0, 0, 0, 0.04); }
-
-/* -------- Head: breadcrumbs + title -------- */
+/* -------- Head: breadcrumbs (its own component) + title -------- */
 .topbar__head { min-width: 0; }
-.topbar__crumbs {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.74rem;
-  color: var(--muted);
-  margin-bottom: 2px;
-  letter-spacing: 0.04em;
-}
-.topbar__crumbs > span:last-child .topbar__crumb {
-  color: var(--gold-600);
-  font-weight: 600;
-}
-.topbar__crumb-sep {
-  color: rgba(0, 0, 0, 0.25);
-  margin: 0 4px;
-  flex-shrink: 0;
-}
 .topbar__title {
   font-size: 1.18rem;
   font-family: var(--font-serif);
@@ -195,6 +166,7 @@
 
 /* -------- Popovers (shared) -------- */
 .topbar__pop { position: relative; }
+.topbar__pop--mobile-only { display: none; }
 
 .topbar__menu {
   position: absolute;
@@ -211,6 +183,49 @@
 .topbar__menu--create { min-width: 280px; padding: 8px; }
 .topbar__menu--notif  { min-width: 380px; max-width: 92vw; }
 .topbar__menu--user   { min-width: 260px; padding: 8px; }
+.topbar__menu--more   { min-width: 280px; padding: 8px; }
+
+/* Theme swatch chips (inside the mobile More popover) */
+.topbar__more-swatches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 4px 4px 6px;
+}
+.topbar__theme-chip {
+  position: relative;
+  display: grid;
+  grid-template-columns: 14px 14px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .25s var(--ease), background .25s var(--ease);
+}
+.topbar__theme-chip > span {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+.topbar__theme-chip small {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar__theme-chip:hover { border-color: var(--gold-500); }
+.topbar__theme-chip.is-active {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px rgba(201, 165, 92, 0.15);
+}
 
 .topbar__menu-label {
   font-size: 0.68rem;
@@ -345,16 +360,37 @@
 
 /* -------- Responsive -------- */
 @media (max-width: 980px) {
-  .topbar__burger { display: inline-grid; }
   .topbar__search { width: 200px; }
   .topbar__menu--notif { min-width: 320px; }
 }
+
+/* Phone: drop breadcrumbs, shrink title, fold Theme + Create
+ * into the More popover. Mobile topbar = title · notif · more · user. */
 @media (max-width: 720px) {
+  .topbar {
+    min-height: 60px;
+    padding-inline: 0.85rem;
+    gap: 0.5rem;
+  }
+  .crumbs { display: none; }
+  .topbar__title { font-size: 1rem; }
+  .topbar__tools { gap: 0.4rem; }
   .topbar__search { display: none; }
-  .topbar__create span { display: none; }
-  .topbar__create { padding: 0; width: 40px; justify-content: center; }
+  .topbar__create { display: none; }
+  .theme-toggle { display: none; }
+  .topbar__pop--mobile-only { display: block; }
+  .topbar__icon-btn { width: 38px; height: 38px; }
   .topbar__user-meta { display: none; }
   .topbar__user-btn { padding: 4px; }
-  .topbar__menu { right: 0; left: auto; }
-  .topbar__menu--notif { right: -1rem; left: auto; }
+  /* Pin popovers to the viewport so they never get clipped — no
+   * matter which button on the right side they belong to. */
+  .topbar__menu {
+    position: fixed;
+    top: 68px;
+    left: 0.6rem;
+    right: 0.6rem;
+    min-width: 0;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
 }

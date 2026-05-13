@@ -178,8 +178,11 @@
 }
 
 /* -------- Mobile -------- */
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .theme-toggle__swatches { display: none; }
-  .theme-toggle__btn { padding: 0; width: 40px; justify-content: center; }
-  .theme-toggle__menu { min-width: 280px; right: -1rem; }
+  .theme-toggle__btn { padding: 0; width: 38px; height: 38px; justify-content: center; }
+  .theme-toggle__menu {
+    min-width: min(320px, calc(100vw - 1rem));
+    right: -0.5rem;
+  }
 }

@@ -5,13 +5,15 @@ import Icon from '../../components/ui/Icon'
 import { useAuth } from '../../auth/useAuth'
 import { useSearch } from '../../components/search/useSearch'
 import ThemeToggle from '../../components/theme/ThemeToggle'
+import { useTheme } from '../../components/theme/useTheme'
+import Breadcrumbs from './Breadcrumbs'
 import './Topbar.css'
 
 const TITLES = {
-  '/app':           { title: 'Overview',        eyebrow: 'Dashboard',      crumbs: ['Workspace', 'Overview'] },
-  '/app/clients':   { title: 'Client Records',  eyebrow: 'Data entry',     crumbs: ['Workspace', 'Clients'] },
-  '/app/cases':     { title: 'Matters & Cases', eyebrow: 'Data entry',     crumbs: ['Workspace', 'Cases'] },
-  '/app/documents': { title: 'Documents',       eyebrow: 'PDF generation', crumbs: ['Workspace', 'Documents'] },
+  '/app':           { title: 'Overview',        eyebrow: 'Dashboard'      },
+  '/app/clients':   { title: 'Client Records',  eyebrow: 'Data entry'     },
+  '/app/cases':     { title: 'Matters & Cases', eyebrow: 'Data entry'     },
+  '/app/documents': { title: 'Documents',       eyebrow: 'PDF generation' },
 }
 
 const QUICK_CREATE = [
@@ -27,16 +29,19 @@ const NOTIFICATIONS = [
   { id: 4, icon: 'check', title: 'Matter closed',    body: 'Nepal Foods labour dispute marked as settled.',                     would: '5 days ago', when: '5 days ago', unread: false },
 ]
 
-export default function Topbar({ onToggleSidebar }) {
+export default function Topbar() {
   const { user, signOut } = useAuth()
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { open: openSearch } = useSearch()
-  const head = TITLES[pathname] || { title: 'Workspace', eyebrow: '', crumbs: ['Workspace'] }
+  const head = TITLES[pathname] || { title: 'Workspace', eyebrow: '' }
+
+  const { theme, setTheme, themes } = useTheme()
 
   const [createOpen, setCreateOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
   const [userOpen, setUserOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
 
   /* Close any open dropdown on route change. */
   const [lastPath, setLastPath] = useState(pathname)
@@ -45,20 +50,21 @@ export default function Topbar({ onToggleSidebar }) {
     setCreateOpen(false)
     setNotifOpen(false)
     setUserOpen(false)
+    setMoreOpen(false)
   }
 
   /* Outside-click handler for all popovers in one pass. */
   const rootRef = useRef(null)
   useEffect(() => {
-    if (!createOpen && !notifOpen && !userOpen) return
+    if (!createOpen && !notifOpen && !userOpen && !moreOpen) return
     const onDown = (e) => {
       if (!rootRef.current?.contains(e.target)) {
-        setCreateOpen(false); setNotifOpen(false); setUserOpen(false)
+        setCreateOpen(false); setNotifOpen(false); setUserOpen(false); setMoreOpen(false)
       }
     }
     document.addEventListener('mousedown', onDown)
     return () => document.removeEventListener('mousedown', onDown)
-  }, [createOpen, notifOpen, userOpen])
+  }, [createOpen, notifOpen, userOpen, moreOpen])
 
   const initials = (user?.name || user?.email || 'U')
     .split(' ')
@@ -78,30 +84,13 @@ export default function Topbar({ onToggleSidebar }) {
     setCreateOpen(which === 'create')
     setNotifOpen(which === 'notif')
     setUserOpen(which === 'user')
+    setMoreOpen(which === 'more')
   }
 
   return (
     <header className="topbar" ref={rootRef}>
-      <button
-        type="button"
-        className="topbar__burger"
-        onClick={onToggleSidebar}
-        aria-label="Toggle menu"
-      >
-        <Icon name="menu" size={20} />
-      </button>
-
       <div className="topbar__head">
-        <nav className="topbar__crumbs" aria-label="Breadcrumb">
-          {head.crumbs.map((c, i) => (
-            <span key={c}>
-              <span className="topbar__crumb">{c}</span>
-              {i < head.crumbs.length - 1 && (
-                <Icon name="arrow" size={10} className="topbar__crumb-sep" />
-              )}
-            </span>
-          ))}
-        </nav>
+        <Breadcrumbs />
         <h1 className="topbar__title">{head.title}</h1>
       </div>
 
@@ -200,6 +189,61 @@ export default function Topbar({ onToggleSidebar }) {
                 <div className="topbar__menu-foot">
                   <button type="button" className="topbar__menu-link">View all activity</button>
                 </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Mobile-only "More" — folds Theme + Quick-create so the
+            mobile topbar stays clean. */}
+        <div className="topbar__pop topbar__pop--mobile-only">
+          <button
+            type="button"
+            className={`topbar__icon-btn ${moreOpen ? 'is-open' : ''}`}
+            onClick={() => openOnly(moreOpen ? null : 'more')}
+            aria-expanded={moreOpen}
+            aria-label="More actions"
+          >
+            <Icon name="dots" size={18} />
+          </button>
+          <AnimatePresence>
+            {moreOpen && (
+              <motion.div
+                className="topbar__menu topbar__menu--more"
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+              >
+                <div className="topbar__menu-label">Theme</div>
+                <div className="topbar__more-swatches">
+                  {themes.map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      className={`topbar__theme-chip ${theme === t.id ? 'is-active' : ''}`}
+                      onClick={() => { setTheme(t.id); setMoreOpen(false) }}
+                      aria-label={`Switch to ${t.name}`}
+                      title={t.name}
+                    >
+                      <span style={{ background: t.swatches[0] }} />
+                      <span style={{ background: t.swatches[2] }} />
+                      <small>{t.name}</small>
+                    </button>
+                  ))}
+                </div>
+                <div className="topbar__menu-sep" />
+                <div className="topbar__menu-label">Quick create</div>
+                {QUICK_CREATE.map((q) => (
+                  <Link key={q.label} to={q.to} className="topbar__menu-item">
+                    <span className="topbar__menu-icon"><Icon name={q.icon} size={16} /></span>
+                    <span className="topbar__menu-meta">
+                      <strong>{q.label}</strong>
+                      <small>{q.hint}</small>
+                    </span>
+                    <Icon name="arrow" size={12} className="topbar__menu-arrow" />
+                  </Link>
+                ))}
               </motion.div>
             )}
           </AnimatePresence>

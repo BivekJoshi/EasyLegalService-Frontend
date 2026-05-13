@@ -705,30 +705,9 @@
 .sidebar.is-collapsed .sidebar__collapse-text { display: none; }
 .sidebar.is-collapsed .sidebar__collapse { padding: 8px; }
 
-/* -------- Mobile drawer -------- */
-@media (max-width: 980px) {
-  .sidebar {
-    position: fixed;
-    inset: 0 auto 0 0;
-    width: var(--sidebar-w);
-    transform: translateX(-105%);
-    transition: transform .35s var(--ease-out);
-  }
-  .app--drawer .sidebar { transform: none; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); }
-  /* On mobile never collapse — always full */
-  .sidebar.is-collapsed { width: var(--sidebar-w); }
-  .sidebar.is-collapsed .sidebar__workspace-meta,
-  .sidebar.is-collapsed .sidebar__search-text,
-  .sidebar.is-collapsed .sidebar__search-kbd,
-  .sidebar.is-collapsed .sidebar__link-text,
-  .sidebar.is-collapsed .sidebar__section-label,
-  .sidebar.is-collapsed .sidebar__userinfo,
-  .sidebar.is-collapsed .sidebar__logout,
-  .sidebar.is-collapsed .sidebar__collapse-text,
-  .sidebar.is-collapsed .sidebar__group-caret,
-  .sidebar.is-collapsed .sidebar__sublist { opacity: 1; display: revert; pointer-events: auto; }
-  .sidebar.is-collapsed .sidebar__flyout { display: none; }
-  .sidebar__collapse { display: none; }
+/* -------- Phone: sidebar hidden, bottom nav takes over -------- */
+@media (max-width: 720px) {
+  .sidebar { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
