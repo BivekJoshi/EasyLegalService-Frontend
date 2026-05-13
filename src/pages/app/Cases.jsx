@@ -1,15 +1,7 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'motion/react'
 import Icon from '../../components/ui/Icon'
-
-const SEED = [
-  { id: '2080-021', title: 'Aakash Trading vs. Customs Office', client: 'Aakash Trading Pvt. Ltd.', area: 'Tax & Customs',    status: 'Active',  filed: '12 Apr 2025', lead: 'R. Shrestha' },
-  { id: '2080-019', title: 'Karki — Property partition',         client: 'Sita Karki',                area: 'Property',         status: 'Pending', filed: '08 Apr 2025', lead: 'A. Pandey'   },
-  { id: '2080-016', title: 'Hydropower licence renewal',         client: 'Himalaya Hydropower',       area: 'Corporate / Reg.', status: 'Draft',   filed: '02 Apr 2025', lead: 'M. Adhikari' },
-  { id: '2080-014', title: 'Maharjan v. Maharjan',               client: 'Bishnu Maharjan',           area: 'Family',           status: 'Active',  filed: '28 Mar 2025', lead: 'A. Pandey'   },
-  { id: '2080-011', title: 'Nepal Foods — labour dispute',       client: 'Nepal Foods Co.',           area: 'Employment',       status: 'Closed',  filed: '04 Feb 2025', lead: 'R. Shrestha' },
-  { id: '2080-009', title: 'Pradhan — contract review',          client: 'Rita Pradhan',              area: 'Contracts',        status: 'Active',  filed: '22 Jan 2025', lead: 'M. Adhikari' },
-]
+import { CASE_SEED } from '../../data/seed'
 
 const STATUS_FILTERS = ['All', 'Active', 'Pending', 'Draft', 'Closed']
 const PRACTICE_AREAS = [
@@ -28,7 +20,7 @@ const EMPTY_FORM = {
 }
 
 export default function Cases() {
-  const [cases, setCases] = useState(SEED)
+  const [cases, setCases] = useState(CASE_SEED)
   const [view, setView] = useState('list')
   const [filter, setFilter] = useState('All')
   const [query, setQuery] = useState('')

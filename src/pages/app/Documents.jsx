@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
 import Icon from '../../components/ui/Icon'
+import { DOCUMENT_SEED } from '../../data/seed'
 
 const TEMPLATES = [
   { id: 'engagement',  icon: 'handshake', name: 'Engagement Letter',  desc: 'Scope, fees, retainer terms.' },
@@ -9,14 +10,6 @@ const TEMPLATES = [
   { id: 'power',       icon: 'gavel',     name: 'Power of Attorney',  desc: 'General or special POA.' },
   { id: 'notice',      icon: 'chat',      name: 'Legal Notice',       desc: 'Demand or cease-and-desist.' },
   { id: 'lease',       icon: 'building',  name: 'Lease Agreement',    desc: 'Commercial or residential.' },
-]
-
-const SEED_DOCS = [
-  { id: 'DOC-2418', title: 'Engagement Letter — Aakash Trading',  template: 'Engagement Letter', client: 'Aakash Trading Pvt. Ltd.', author: 'R. Shrestha', generated: '14 Apr 2025 · 10:42', status: 'Signed'   },
-  { id: 'DOC-2417', title: 'Mutual NDA — Himalaya Hydropower',     template: 'NDA',               client: 'Himalaya Hydropower',     author: 'A. Pandey',    generated: '12 Apr 2025 · 16:18', status: 'Sent'     },
-  { id: 'DOC-2416', title: 'Affidavit — Sita Karki property',      template: 'Affidavit',         client: 'Sita Karki',              author: 'A. Pandey',    generated: '08 Apr 2025 · 09:05', status: 'Draft'    },
-  { id: 'DOC-2415', title: 'Legal Notice — Nepal Foods labour',    template: 'Legal Notice',      client: 'Nepal Foods Co.',         author: 'R. Shrestha', generated: '02 Apr 2025 · 13:30', status: 'Signed'   },
-  { id: 'DOC-2414', title: 'Power of Attorney — Maharjan',         template: 'Power of Attorney', client: 'Bishnu Maharjan',         author: 'M. Adhikari', generated: '28 Mar 2025 · 11:11', status: 'Archived' },
 ]
 
 const STATUS_FILTERS = ['All', 'Draft', 'Sent', 'Signed', 'Archived']
@@ -32,7 +25,7 @@ const EMPTY_FORM = {
 }
 
 export default function Documents() {
-  const [docs, setDocs] = useState(SEED_DOCS)
+  const [docs, setDocs] = useState(DOCUMENT_SEED)
   const [view, setView] = useState('list')
   const [filter, setFilter] = useState('All')
   const [form, setForm] = useState(EMPTY_FORM)

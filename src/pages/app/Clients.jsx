@@ -1,22 +1,14 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'motion/react'
 import Icon from '../../components/ui/Icon'
-
-const SEED = [
-  { id: 'CL-2401', name: 'Aakash Trading Pvt. Ltd.', type: 'Corporate',  email: 'legal@aakash.com.np',   phone: '+977 9801-110011', cases: 4, since: '12 Apr 2025' },
-  { id: 'CL-2400', name: 'Sita Karki',                type: 'Individual', email: 'sita.karki@gmail.com', phone: '+977 9841-220022', cases: 1, since: '08 Apr 2025' },
-  { id: 'CL-2399', name: 'Himalaya Hydropower',       type: 'Corporate',  email: 'counsel@hhpower.com',  phone: '+977 9803-330033', cases: 2, since: '02 Apr 2025' },
-  { id: 'CL-2398', name: 'Bishnu Maharjan',           type: 'Individual', email: 'b.maharjan@yahoo.com', phone: '+977 9842-440044', cases: 1, since: '28 Mar 2025' },
-  { id: 'CL-2397', name: 'Nepal Foods Co.',           type: 'Corporate',  email: 'office@nepalfoods.np', phone: '+977 9851-550055', cases: 3, since: '19 Mar 2025' },
-  { id: 'CL-2396', name: 'Rita Pradhan',              type: 'Individual', email: 'rita.p@outlook.com',   phone: '+977 9802-660066', cases: 1, since: '11 Mar 2025' },
-]
+import { CLIENT_SEED } from '../../data/seed'
 
 const FILTERS = ['All', 'Individual', 'Corporate']
 
 const EMPTY_FORM = { name: '', type: 'Individual', email: '', phone: '', address: '', notes: '' }
 
 export default function Clients() {
-  const [clients, setClients] = useState(SEED)
+  const [clients, setClients] = useState(CLIENT_SEED)
   const [view, setView] = useState('list') // 'list' | 'new'
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('All')

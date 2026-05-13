@@ -68,24 +68,32 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  height: 40px;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0 14px;
   width: 320px;
   max-width: 30vw;
-  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
 }
-.topbar__search:focus-within {
+.topbar__search:hover, .topbar__search:focus-visible {
   border-color: var(--gold-500);
   box-shadow: 0 0 0 4px rgba(201, 165, 92, 0.16);
+  outline: none;
 }
-.topbar__search svg { color: var(--muted); }
-.topbar__search input {
-  border: none; outline: none; background: transparent;
-  font: inherit; font-size: 0.9rem;
-  padding: 11px 0;
-  flex: 1; min-width: 0;
+.topbar__search svg { color: var(--muted); flex-shrink: 0; }
+.topbar__search-placeholder {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9rem;
+  color: #a8a89e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .topbar__search kbd {
   background: var(--paper);
@@ -95,6 +103,7 @@
   font-size: 0.7rem;
   color: var(--muted);
   font-family: inherit;
+  flex-shrink: 0;
 }
 
 /* Quick-create primary CTA */

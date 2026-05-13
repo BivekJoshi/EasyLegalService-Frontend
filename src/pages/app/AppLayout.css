@@ -3,7 +3,7 @@
    The sidebar, topbar, and workspace primitives live in their
    own stylesheets and are imported here as the layout root.
    ============================================================ */
-@import './Sidebar.css';
+@import './Sidebar/Sidebar.css';
 @import './Topbar.css';
 @import './workspace.css';
 

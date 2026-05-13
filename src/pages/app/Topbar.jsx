@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import Icon from '../../components/ui/Icon'
 import { useAuth } from '../../auth/useAuth'
+import { useSearch } from '../../components/search/useSearch'
 import './Topbar.css'
 
 const TITLES = {
@@ -29,6 +30,7 @@ export default function Topbar({ onToggleSidebar }) {
   const { user, signOut } = useAuth()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const { open: openSearch } = useSearch()
   const head = TITLES[pathname] || { title: 'Workspace', eyebrow: '', crumbs: ['Workspace'] }
 
   const [createOpen, setCreateOpen] = useState(false)
@@ -103,11 +105,16 @@ export default function Topbar({ onToggleSidebar }) {
       </div>
 
       <div className="topbar__tools">
-        <label className="topbar__search">
+        <button
+          type="button"
+          className="topbar__search"
+          onClick={openSearch}
+          aria-label="Open quick search"
+        >
           <Icon name="search" size={16} />
-          <input type="search" placeholder="Search clients, cases, documents…" />
+          <span className="topbar__search-placeholder">Search clients, cases, documents…</span>
           <kbd>⌘K</kbd>
-        </label>
+        </button>
 
         {/* Quick-create */}
         <div className="topbar__pop">
