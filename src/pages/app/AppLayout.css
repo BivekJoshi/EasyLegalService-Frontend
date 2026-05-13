@@ -1,0 +1,48 @@
+/* ============================================================
+   AppLayout — shell variables, grid, and content scaffold
+   The sidebar, topbar, and workspace primitives live in their
+   own stylesheets and are imported here as the layout root.
+   ============================================================ */
+@import './Sidebar.css';
+@import './Topbar.css';
+@import './workspace.css';
+
+.app {
+  --sidebar-w:           264px;
+  --sidebar-w-collapsed: 76px;
+  --topbar-h:            72px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  background: var(--paper);
+  color: var(--ink);
+  transition: grid-template-columns .3s cubic-bezier(.16, 1, .3, 1);
+}
+.app--collapsed {
+  grid-template-columns: var(--sidebar-w-collapsed) minmax(0, 1fr);
+}
+
+.app__main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__content {
+  padding: clamp(1.4rem, 2.4vw, 2.4rem);
+  flex: 1;
+  min-width: 0;
+}
+
+.app__scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 18, 48, 0.45);
+  z-index: 25;
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .app, .app--collapsed { grid-template-columns: 1fr; }
+  .app--drawer .app__scrim { display: block; }
+}

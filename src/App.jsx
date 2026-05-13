@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence } from 'motion/react'
 import {
   BrowserRouter,
+  Outlet,
   Route,
   Routes,
   useLocation,
@@ -17,6 +18,16 @@ import Loader from './components/ui/Loader'
 import DevCredit from './components/ui/DevCredit'
 import { useReveal } from './hooks/useReveal'
 import { useLenis, getLenis } from './hooks/useLenis'
+import { AuthProvider } from './auth/AuthContext'
+import ProtectedRoute from './auth/ProtectedRoute'
+import AuthShell from './pages/auth/AuthShell'
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
+import AppLayout from './pages/app/AppLayout'
+import Dashboard from './pages/app/Dashboard'
+import Clients from './pages/app/Clients'
+import Cases from './pages/app/Cases'
+import Documents from './pages/app/Documents'
 
 const LOADER_MS = 3000
 
@@ -53,9 +64,10 @@ function TeamMemberRoute() {
   return <TeamMemberPage key={slug} />
 }
 
-export default function App() {
+/* Marketing-site chrome: navbar + footer + scroll progress + smooth scroll.
+ * Auth and workspace routes opt out of this entire shell. */
+function PublicLayout() {
   const [loading, setLoading] = useState(true)
-
   useLenis()
   useReveal(!loading)
 
@@ -70,21 +82,49 @@ export default function App() {
   }, [loading])
 
   return (
-    <BrowserRouter>
+    <>
       <AnimatePresence>
         {loading && <Loader key="loader" duration={LOADER_MS} />}
       </AnimatePresence>
-
       <ScrollProgress />
-      <ScrollToTop />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/team/:slug" element={<TeamMemberRoute />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Outlet />
       <Footer />
       <DevCredit />
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <AuthProvider>
+        <Routes>
+          {/* Marketing site (navbar, footer, loader, smooth scroll) */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/team/:slug" element={<TeamMemberRoute />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+
+          {/* Auth — split-screen, no public chrome */}
+          <Route element={<AuthShell />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+
+          {/* Protected workspace (sidebar + topbar) */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/app" element={<AppLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="clients" element={<Clients />} />
+              <Route path="cases" element={<Cases />} />
+              <Route path="documents" element={<Documents />} />
+            </Route>
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
