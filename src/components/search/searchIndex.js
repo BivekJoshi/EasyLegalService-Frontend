@@ -7,30 +7,27 @@ function collectNavLeaves() {
   const out = []
   for (const section of SECTIONS) {
     for (const item of section.items) {
-      walk(item, null, section.label, [], out)
+      walk(item, null, section.sectionKey, [], out)
     }
   }
   return out
 }
-function walk(item, parent, sectionLabel, trail, out) {
+function walk(item, parent, sectionKey, trail, out) {
   if (item.disabled) return
   if (item.to) {
-    const breadcrumb = trail.length
-      ? `${sectionLabel} · ${trail.join(' › ')}`
-      : sectionLabel
     out.push({
       type: 'page',
       id: 'nav-' + item.id,
-      title: item.label,
-      subtitle: breadcrumb,
+      titleKey: item.labelKey,         // resolves via t() at render time
+      subtitleKey: sectionKey,          // breadcrumb-style subtitle
       icon: item.icon || parent?.icon || 'grid',
       to: item.to,
-      keywords: [sectionLabel, ...trail, parent?.label].filter(Boolean),
+      keywords: [sectionKey, ...trail, parent?.labelKey].filter(Boolean),
     })
   }
   if (item.children) {
     for (const child of item.children) {
-      walk(child, item, sectionLabel, [...trail, item.label], out)
+      walk(child, item, sectionKey, [...trail, item.labelKey], out)
     }
   }
 }
@@ -44,10 +41,10 @@ export function buildIndex({ onSignOut }) {
     ...collectNavLeaves(),
 
     /* ---- Actions ---- */
-    { type: 'action', id: 'act-new-client', title: 'New client',         subtitle: 'Open the client intake form', icon: 'plus',   to: '/app/clients',   keywords: ['create', 'add', 'intake'] },
-    { type: 'action', id: 'act-new-case',   title: 'New matter',         subtitle: 'Open a case',                  icon: 'plus',   to: '/app/cases',     keywords: ['create', 'add', 'open case'] },
-    { type: 'action', id: 'act-new-doc',    title: 'Generate document',  subtitle: 'From a template',              icon: 'plus',   to: '/app/documents', keywords: ['create', 'pdf', 'new doc', 'generate'] },
-    { type: 'action', id: 'act-signout',    title: 'Sign out',           subtitle: 'End your session',             icon: 'logout', to: '/login',         keywords: ['logout', 'leave'], onSelect: onSignOut },
+    { type: 'action', id: 'act-new-client', titleKey: 'cmdk.actions.newClientTitle', subtitleKey: 'cmdk.actions.newClientHint', icon: 'plus',   to: '/app/clients',   keywords: ['create', 'add', 'intake', 'नयाँ'] },
+    { type: 'action', id: 'act-new-case',   titleKey: 'cmdk.actions.newCaseTitle',   subtitleKey: 'cmdk.actions.newCaseHint',   icon: 'plus',   to: '/app/cases',     keywords: ['create', 'add', 'open case', 'मुद्दा'] },
+    { type: 'action', id: 'act-new-doc',    titleKey: 'cmdk.actions.newDocTitle',    subtitleKey: 'cmdk.actions.newDocHint',    icon: 'plus',   to: '/app/documents', keywords: ['create', 'pdf', 'generate', 'कागजात'] },
+    { type: 'action', id: 'act-signout',    titleKey: 'cmdk.actions.signOutTitle',   subtitleKey: 'cmdk.actions.signOutHint',   icon: 'logout', to: '/login',         keywords: ['logout', 'leave', 'साइन'], onSelect: onSignOut },
 
     /* ---- Clients ---- */
     ...CLIENT_SEED.map((c) => ({
@@ -84,19 +81,20 @@ export function buildIndex({ onSignOut }) {
   ]
 }
 
-const TYPE_LABEL = {
-  page:     'Pages',
-  action:   'Actions',
-  client:   'Clients',
-  case:     'Cases',
-  document: 'Documents',
+/* Translation keys for each group label — read by CommandPalette. */
+export const TYPE_LABEL_KEYS = {
+  page:     'cmdk.section.page',
+  action:   'cmdk.section.action',
+  client:   'cmdk.section.client',
+  case:     'cmdk.section.case',
+  document: 'cmdk.section.document',
 }
 
 const TYPE_ORDER = ['page', 'action', 'client', 'case', 'document']
 
 /* Substring-scored search. Empty query → just pages + actions
  * (the most useful jump targets when the user just opened the palette). */
-export function searchItems(items, query) {
+export function searchItems(items, query, resolver = (s) => s) {
   const q = query.trim().toLowerCase()
 
   if (!q) {
@@ -105,8 +103,11 @@ export function searchItems(items, query) {
 
   const scored = []
   for (const item of items) {
-    const title = item.title.toLowerCase()
-    const subtitle = (item.subtitle || '').toLowerCase()
+    const resolvedTitle    = item.titleKey    ? resolver(item.titleKey)    : item.title
+    const resolvedSubtitle = item.subtitleKey ? resolver(item.subtitleKey) : item.subtitle
+
+    const title    = (resolvedTitle || '').toLowerCase()
+    const subtitle = (resolvedSubtitle || '').toLowerCase()
     const keywords = (item.keywords || []).join(' ').toLowerCase()
 
     let score = 0
@@ -132,5 +133,5 @@ export function groupByType(items) {
   }
   return TYPE_ORDER
     .filter((t) => groups.has(t))
-    .map((t) => ({ type: t, label: TYPE_LABEL[t], items: groups.get(t) }))
+    .map((t) => ({ type: t, items: groups.get(t) }))
 }

@@ -1,0 +1,117 @@
+{
+  "brand": {
+    "name": "इजी लिगल",
+    "workspace": "वकालत कार्यक्षेत्र",
+    "tier": "प्रो"
+  },
+  "sidebar": {
+    "quickSearch": "द्रुत खोज…",
+    "collapse": "संक्षिप्त",
+    "expand": "विस्तार"
+  },
+  "section": {
+    "workspace": "कार्यक्षेत्र",
+    "resources": "स्रोतहरू",
+    "account": "खाता"
+  },
+  "nav": {
+    "overview": "सिंहावलोकन",
+    "clients": "ग्राहकहरू",
+    "cases": "मुद्दाहरू",
+    "documents": "कागजातहरू",
+    "library": "पुस्तकालय",
+    "inbox": "इनबक्स",
+    "settings": "सेटिङहरू",
+    "help": "मद्दत",
+    "templates": "टेम्प्लेटहरू",
+    "drafts": "मसौदाहरू",
+    "snippets": "स्निपेटहरू",
+    "forms": "फारमहरू",
+    "allDocuments": "सबै कागजातहरू"
+  },
+  "page": {
+    "overview":  { "title": "सिंहावलोकन",        "eyebrow": "ड्यासबोर्ड" },
+    "clients":   { "title": "ग्राहकको अभिलेख",    "eyebrow": "डेटा प्रविष्टि" },
+    "cases":     { "title": "मुद्दा र विषयहरू",    "eyebrow": "डेटा प्रविष्टि" },
+    "documents": { "title": "कागजातहरू",         "eyebrow": "PDF निर्माण" },
+    "workspace": { "title": "कार्यक्षेत्र",         "eyebrow": "" }
+  },
+  "topbar": {
+    "searchPlaceholder": "ग्राहक, मुद्दा, कागजात खोज्नुहोस्…",
+    "create": "नयाँ",
+    "moreActions": "थप कार्यहरू",
+    "notifications": "सूचनाहरू",
+    "markAllRead": "सबै पढिएको चिन्ह",
+    "viewAll": "सबै गतिविधि हेर्नुहोस्",
+    "profile": "प्रोफाइल",
+    "accountSecurity": "खाता र सुरक्षा",
+    "preferences": "प्राथमिकताहरू",
+    "signOut": "साइन आउट",
+    "quickCreate": "द्रुत निर्माण",
+    "newClient": "नयाँ ग्राहक",
+    "newClientHint": "KYC लिनुहोस्",
+    "newMatter": "नयाँ मुद्दा",
+    "newMatterHint": "विवरण, क्षेत्राधिकार",
+    "newDocument": "नयाँ कागजात",
+    "newDocumentHint": "टेम्प्लेटबाट"
+  },
+  "theme": {
+    "title": "कार्यक्षेत्र थिम",
+    "subtitle": "तपाईंको कार्यक्षेत्रमा लागू हुन्छ",
+    "dark": "गाढा",
+    "parchment": { "name": "पार्चमेन्ट", "description": "न्यानो क्रिम कागज, नौसेना मसी, सुनको लेप।" },
+    "midnight":  { "name": "मध्यरात",    "description": "गहिरो नौसेना रात पित्तल हाइलाइटसहित।" },
+    "slate":     { "name": "स्लेट",       "description": "एकाग्र कामका लागि शान्त खैरो रंग।" },
+    "sepia":     { "name": "सेपिया",     "description": "पुस्तकालयको अनुभव दिने पुरानो न्यानो रंग।" }
+  },
+  "lang": {
+    "title": "भाषा",
+    "subtitle": "कार्यक्षेत्रको भाषा",
+    "english": "English (Eng)",
+    "nepali":  "नेपाली",
+    "switchTo": "भाषा परिवर्तन"
+  },
+  "bottomNav": {
+    "home": "गृह",
+    "clients": "ग्राहक",
+    "cases": "मुद्दा",
+    "docs": "कागजात",
+    "search": "खोज"
+  },
+  "cmdk": {
+    "placeholder": "ग्राहक, मुद्दा, कागजात खोज्नुहोस् वा कुनै पृष्ठमा जानुहोस्…",
+    "noMatches": "“{{query}}” को लागि कुनै नतिजा छैन",
+    "noMatchesHint": "अर्को कीवर्ड प्रयास गर्नुहोस् — खोजले शीर्षक, ID र ट्यागहरू समेट्छ।",
+    "navigate": "नेभिगेट",
+    "select": "चयन",
+    "close": "बन्द",
+    "results_one": "{{count}} नतिजा",
+    "results_other": "{{count}} नतिजाहरू",
+    "section": {
+      "page": "पृष्ठहरू",
+      "action": "कार्यहरू",
+      "client": "ग्राहकहरू",
+      "case": "मुद्दाहरू",
+      "document": "कागजातहरू"
+    },
+    "actions": {
+      "newClientTitle": "नयाँ ग्राहक",
+      "newClientHint": "ग्राहक प्रविष्टि फारम खोल्नुहोस्",
+      "newCaseTitle": "नयाँ मुद्दा",
+      "newCaseHint": "मुद्दा खोल्नुहोस्",
+      "newDocTitle": "कागजात निर्माण",
+      "newDocHint": "टेम्प्लेटबाट",
+      "signOutTitle": "साइन आउट",
+      "signOutHint": "तपाईंको सत्र समाप्त गर्नुहोस्"
+    },
+    "pageSubtitle": {
+      "overview": "ड्यासबोर्ड मुख्य पृष्ठ",
+      "clients": "ग्राहक अभिलेख",
+      "cases": "मुद्दा र विषयहरू",
+      "documents": "PDF र टेम्प्लेटहरू"
+    }
+  },
+  "common": {
+    "backToSite": "साइटमा फर्किनुहोस्"
+  }
+}

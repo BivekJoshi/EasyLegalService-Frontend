@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import Icon from '../../../components/ui/Icon'
 import { useAuth } from '../../../auth/useAuth'
 import { useSearch } from '../../../components/search/useSearch'
@@ -10,6 +11,7 @@ import './Sidebar.css'
 export default function Sidebar({ collapsed, onToggleCollapse, onSignOut }) {
   const { user } = useAuth()
   const { open: openSearch } = useSearch()
+  const { t } = useTranslation()
   const initials = (user?.name || user?.email || 'U')
     .split(' ')
     .map((p) => p[0])
@@ -35,10 +37,10 @@ export default function Sidebar({ collapsed, onToggleCollapse, onSignOut }) {
         </span>
         <span className="sidebar__workspace-meta">
           <span className="sidebar__workspace-title">
-            <strong>Easy Legal</strong>
-            <span className="sidebar__tier">Pro</span>
+            <strong>{t('brand.name')}</strong>
+            <span className="sidebar__tier">{t('brand.tier')}</span>
           </span>
-          <small>Counsel workspace</small>
+          <small>{t('brand.workspace')}</small>
         </span>
       </Link>
 
@@ -47,20 +49,20 @@ export default function Sidebar({ collapsed, onToggleCollapse, onSignOut }) {
         type="button"
         className="sidebar__search"
         onClick={openSearch}
-        title="Quick search"
+        title={t('sidebar.quickSearch')}
       >
         <Icon name="search" size={14} />
-        <span className="sidebar__search-text">Quick search…</span>
+        <span className="sidebar__search-text">{t('sidebar.quickSearch')}</span>
         <kbd className="sidebar__search-kbd">⌘K</kbd>
-        <span className="sidebar__tooltip" aria-hidden>Quick search</span>
+        <span className="sidebar__tooltip" aria-hidden>{t('sidebar.quickSearch')}</span>
       </button>
 
       {/* Nav sections */}
       <nav className="sidebar__nav">
         {SECTIONS.map((section, sIdx) => (
-          <div key={section.label} className="sidebar__section">
+          <div key={section.sectionKey} className="sidebar__section">
             <span className="sidebar__section-label">
-              <span>{section.label}</span>
+              <span>{t(section.sectionKey)}</span>
               <span className="sidebar__section-rule" aria-hidden />
             </span>
             <ul>
@@ -89,7 +91,7 @@ export default function Sidebar({ collapsed, onToggleCollapse, onSignOut }) {
           <div className="sidebar__userinfo">
             <strong>
               {user?.name || 'Counsel'}
-              <span className="sidebar__usertier">Pro</span>
+              <span className="sidebar__usertier">{t('brand.tier')}</span>
             </strong>
             <small>{user?.firm}</small>
           </div>
@@ -97,8 +99,8 @@ export default function Sidebar({ collapsed, onToggleCollapse, onSignOut }) {
             type="button"
             className="sidebar__logout"
             onClick={onSignOut}
-            aria-label="Sign out"
-            title="Sign out"
+            aria-label={t('topbar.signOut')}
+            title={t('topbar.signOut')}
           >
             <Icon name="logout" size={16} />
           </button>
@@ -109,11 +111,11 @@ export default function Sidebar({ collapsed, onToggleCollapse, onSignOut }) {
           className="sidebar__collapse"
           onClick={onToggleCollapse}
           aria-pressed={collapsed}
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          aria-label={collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
+          title={collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
         >
           <Icon name={collapsed ? 'chevronRight' : 'chevronLeft'} size={14} />
-          <span className="sidebar__collapse-text">Collapse</span>
+          <span className="sidebar__collapse-text">{t('sidebar.collapse')}</span>
         </button>
       </div>
     </aside>

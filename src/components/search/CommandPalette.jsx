@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import Icon from '../ui/Icon'
-import { searchItems, groupByType } from './searchIndex'
+import { searchItems, groupByType, TYPE_LABEL_KEYS } from './searchIndex'
 import './CommandPalette.css'
 
 export default function CommandPalette({ isOpen, onClose, items, onSelect }) {
+  const { t } = useTranslation()
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
   const inputRef = useRef(null)
@@ -12,9 +14,9 @@ export default function CommandPalette({ isOpen, onClose, items, onSelect }) {
 
   /* Filter + group memoised together — both react to query alone. */
   const { flat, groups } = useMemo(() => {
-    const filtered = searchItems(items, query)
+    const filtered = searchItems(items, query, t)
     return { flat: filtered, groups: groupByType(filtered) }
-  }, [items, query])
+  }, [items, query, t])
 
   /* Reset state every time the palette opens; lock body scroll while open. */
   useEffect(() => {
@@ -95,11 +97,11 @@ export default function CommandPalette({ isOpen, onClose, items, onSelect }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={onKeyDown}
-                placeholder="Search clients, cases, documents, or jump to a page…"
+                placeholder={t('cmdk.placeholder')}
                 spellCheck="false"
                 autoComplete="off"
               />
-              <button type="button" className="cmdk__esc" onClick={onClose} aria-label="Close">
+              <button type="button" className="cmdk__esc" onClick={onClose} aria-label={t('cmdk.close')}>
                 Esc
               </button>
             </div>
@@ -108,15 +110,15 @@ export default function CommandPalette({ isOpen, onClose, items, onSelect }) {
               {flat.length === 0 ? (
                 <div className="cmdk__empty">
                   <Icon name="search" size={28} />
-                  <strong>No matches for “{query}”</strong>
-                  <p>Try a different keyword — search covers titles, IDs, and tags.</p>
+                  <strong>{t('cmdk.noMatches', { query })}</strong>
+                  <p>{t('cmdk.noMatchesHint')}</p>
                 </div>
               ) : (
                 groups.map((group) => {
                   const baseIdx = flat.indexOf(group.items[0])
                   return (
                     <div key={group.type} className="cmdk__section">
-                      <div className="cmdk__section-label">{group.label}</div>
+                      <div className="cmdk__section-label">{t(TYPE_LABEL_KEYS[group.type])}</div>
                       <ul>
                         {group.items.map((item, i) => {
                           const idx = baseIdx + i
@@ -134,8 +136,10 @@ export default function CommandPalette({ isOpen, onClose, items, onSelect }) {
                                   <Icon name={item.icon} size={16} />
                                 </span>
                                 <span className="cmdk__meta">
-                                  <strong>{item.title}</strong>
-                                  {item.subtitle && <small>{item.subtitle}</small>}
+                                  <strong>{item.titleKey ? t(item.titleKey) : item.title}</strong>
+                                  {(item.subtitleKey || item.subtitle) && (
+                                    <small>{item.subtitleKey ? t(item.subtitleKey) : item.subtitle}</small>
+                                  )}
                                 </span>
                                 <span className="cmdk__hint" aria-hidden>
                                   {isActive && <Icon name="arrow" size={14} />}
@@ -152,11 +156,11 @@ export default function CommandPalette({ isOpen, onClose, items, onSelect }) {
             </div>
 
             <div className="cmdk__foot">
-              <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
-              <span><kbd>↵</kbd> select</span>
-              <span><kbd>esc</kbd> close</span>
+              <span><kbd>↑</kbd><kbd>↓</kbd> {t('cmdk.navigate')}</span>
+              <span><kbd>↵</kbd> {t('cmdk.select')}</span>
+              <span><kbd>esc</kbd> {t('cmdk.close')}</span>
               <span className="cmdk__foot-end">
-                {flat.length} result{flat.length !== 1 && 's'}
+                {t('cmdk.results', { count: flat.length })}
               </span>
             </div>
           </motion.div>

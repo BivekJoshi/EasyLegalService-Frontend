@@ -1,25 +1,29 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import Icon from '../../components/ui/Icon'
 import { useAuth } from '../../auth/useAuth'
 import { useSearch } from '../../components/search/useSearch'
 import ThemeToggle from '../../components/theme/ThemeToggle'
 import { useTheme } from '../../components/theme/useTheme'
+import LanguageToggle from '../../components/lang/LanguageToggle'
+import { SUPPORTED as LANGUAGES } from '../../i18n/config'
 import Breadcrumbs from './Breadcrumbs'
 import './Topbar.css'
 
-const TITLES = {
-  '/app':           { title: 'Overview',        eyebrow: 'Dashboard'      },
-  '/app/clients':   { title: 'Client Records',  eyebrow: 'Data entry'     },
-  '/app/cases':     { title: 'Matters & Cases', eyebrow: 'Data entry'     },
-  '/app/documents': { title: 'Documents',       eyebrow: 'PDF generation' },
+/* Translation keys per route — resolved at render time via t(). */
+const PAGE_KEYS = {
+  '/app':           'page.overview',
+  '/app/clients':   'page.clients',
+  '/app/cases':     'page.cases',
+  '/app/documents': 'page.documents',
 }
 
 const QUICK_CREATE = [
-  { to: '/app/clients',   icon: 'users',     label: 'New client',    hint: 'Capture KYC' },
-  { to: '/app/cases',     icon: 'briefcase', label: 'New matter',    hint: 'Brief, jurisdiction' },
-  { to: '/app/documents', icon: 'file',      label: 'New document',  hint: 'From template' },
+  { to: '/app/clients',   icon: 'users',     labelKey: 'topbar.newClient',   hintKey: 'topbar.newClientHint' },
+  { to: '/app/cases',     icon: 'briefcase', labelKey: 'topbar.newMatter',   hintKey: 'topbar.newMatterHint' },
+  { to: '/app/documents', icon: 'file',      labelKey: 'topbar.newDocument', hintKey: 'topbar.newDocumentHint' },
 ]
 
 const NOTIFICATIONS = [
@@ -34,7 +38,12 @@ export default function Topbar() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { open: openSearch } = useSearch()
-  const head = TITLES[pathname] || { title: 'Workspace', eyebrow: '' }
+  const { t, i18n } = useTranslation()
+  const pageKey = PAGE_KEYS[pathname] || 'page.workspace'
+  const head = {
+    title:   t(`${pageKey}.title`),
+    eyebrow: t(`${pageKey}.eyebrow`),
+  }
 
   const { theme, setTheme, themes } = useTheme()
 
@@ -99,10 +108,10 @@ export default function Topbar() {
           type="button"
           className="topbar__search"
           onClick={openSearch}
-          aria-label="Open quick search"
+          aria-label={t('topbar.searchPlaceholder')}
         >
           <Icon name="search" size={16} />
-          <span className="topbar__search-placeholder">Search clients, cases, documents…</span>
+          <span className="topbar__search-placeholder">{t('topbar.searchPlaceholder')}</span>
           <kbd>⌘K</kbd>
         </button>
 
@@ -113,10 +122,10 @@ export default function Topbar() {
             className={`topbar__create ${createOpen ? 'is-open' : ''}`}
             onClick={() => openOnly(createOpen ? null : 'create')}
             aria-expanded={createOpen}
-            aria-label="Quick create"
+            aria-label={t('topbar.quickCreate')}
           >
             <Icon name="plus" size={16} />
-            <span>New</span>
+            <span>{t('topbar.create')}</span>
           </button>
           <AnimatePresence>
             {createOpen && (
@@ -127,13 +136,13 @@ export default function Topbar() {
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.18 }}
               >
-                <div className="topbar__menu-label">Quick create</div>
+                <div className="topbar__menu-label">{t('topbar.quickCreate')}</div>
                 {QUICK_CREATE.map((q) => (
-                  <Link key={q.label} to={q.to} className="topbar__menu-item">
+                  <Link key={q.labelKey} to={q.to} className="topbar__menu-item">
                     <span className="topbar__menu-icon"><Icon name={q.icon} size={16} /></span>
                     <span className="topbar__menu-meta">
-                      <strong>{q.label}</strong>
-                      <small>{q.hint}</small>
+                      <strong>{t(q.labelKey)}</strong>
+                      <small>{t(q.hintKey)}</small>
                     </span>
                     <Icon name="arrow" size={12} className="topbar__menu-arrow" />
                   </Link>
@@ -143,7 +152,8 @@ export default function Topbar() {
           </AnimatePresence>
         </div>
 
-        {/* Theme toggle (post-login, global across the dashboard) */}
+        {/* Language + Theme toggles (post-login, global across the dashboard) */}
+        <LanguageToggle />
         <ThemeToggle />
 
         {/* Notifications */}
@@ -153,7 +163,7 @@ export default function Topbar() {
             className="topbar__icon-btn"
             onClick={() => openOnly(notifOpen ? null : 'notif')}
             aria-expanded={notifOpen}
-            aria-label={`Notifications, ${unreadCount} unread`}
+            aria-label={t('topbar.notifications')}
           >
             <Icon name="bell" size={18} />
             {unreadCount > 0 && (
@@ -170,8 +180,8 @@ export default function Topbar() {
                 transition={{ duration: 0.18 }}
               >
                 <div className="topbar__menu-head">
-                  <strong>Notifications</strong>
-                  <button type="button" className="topbar__menu-link">Mark all read</button>
+                  <strong>{t('topbar.notifications')}</strong>
+                  <button type="button" className="topbar__menu-link">{t('topbar.markAllRead')}</button>
                 </div>
                 <div className="topbar__notif-list">
                   {NOTIFICATIONS.map((n) => (
@@ -187,7 +197,7 @@ export default function Topbar() {
                   ))}
                 </div>
                 <div className="topbar__menu-foot">
-                  <button type="button" className="topbar__menu-link">View all activity</button>
+                  <button type="button" className="topbar__menu-link">{t('topbar.viewAll')}</button>
                 </div>
               </motion.div>
             )}
@@ -202,7 +212,7 @@ export default function Topbar() {
             className={`topbar__icon-btn ${moreOpen ? 'is-open' : ''}`}
             onClick={() => openOnly(moreOpen ? null : 'more')}
             aria-expanded={moreOpen}
-            aria-label="More actions"
+            aria-label={t('topbar.moreActions')}
           >
             <Icon name="dots" size={18} />
           </button>
@@ -215,31 +225,49 @@ export default function Topbar() {
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.18 }}
               >
-                <div className="topbar__menu-label">Theme</div>
-                <div className="topbar__more-swatches">
-                  {themes.map((t) => (
+                <div className="topbar__menu-label">{t('lang.title')}</div>
+                <div className="topbar__more-langs">
+                  {LANGUAGES.map((l) => (
                     <button
-                      key={t.id}
+                      key={l.id}
                       type="button"
-                      className={`topbar__theme-chip ${theme === t.id ? 'is-active' : ''}`}
-                      onClick={() => { setTheme(t.id); setMoreOpen(false) }}
-                      aria-label={`Switch to ${t.name}`}
-                      title={t.name}
+                      className={`topbar__lang-chip ${i18n.language === l.id ? 'is-active' : ''}`}
+                      onClick={() => { i18n.changeLanguage(l.id); setMoreOpen(false) }}
                     >
-                      <span style={{ background: t.swatches[0] }} />
-                      <span style={{ background: t.swatches[2] }} />
-                      <small>{t.name}</small>
+                      <span className="topbar__lang-code">{l.short}</span>
+                      <span>{l.label}</span>
                     </button>
                   ))}
                 </div>
                 <div className="topbar__menu-sep" />
-                <div className="topbar__menu-label">Quick create</div>
+                <div className="topbar__menu-label">{t('theme.title')}</div>
+                <div className="topbar__more-swatches">
+                  {themes.map((tm) => {
+                    const name = t(`theme.${tm.id}.name`)
+                    return (
+                      <button
+                        key={tm.id}
+                        type="button"
+                        className={`topbar__theme-chip ${theme === tm.id ? 'is-active' : ''}`}
+                        onClick={() => { setTheme(tm.id); setMoreOpen(false) }}
+                        aria-label={name}
+                        title={name}
+                      >
+                        <span style={{ background: tm.swatches[0] }} />
+                        <span style={{ background: tm.swatches[2] }} />
+                        <small>{name}</small>
+                      </button>
+                    )
+                  })}
+                </div>
+                <div className="topbar__menu-sep" />
+                <div className="topbar__menu-label">{t('topbar.quickCreate')}</div>
                 {QUICK_CREATE.map((q) => (
-                  <Link key={q.label} to={q.to} className="topbar__menu-item">
+                  <Link key={q.labelKey} to={q.to} className="topbar__menu-item">
                     <span className="topbar__menu-icon"><Icon name={q.icon} size={16} /></span>
                     <span className="topbar__menu-meta">
-                      <strong>{q.label}</strong>
-                      <small>{q.hint}</small>
+                      <strong>{t(q.labelKey)}</strong>
+                      <small>{t(q.hintKey)}</small>
                     </span>
                     <Icon name="arrow" size={12} className="topbar__menu-arrow" />
                   </Link>
@@ -281,17 +309,17 @@ export default function Topbar() {
                   </div>
                 </div>
                 <button type="button" className="topbar__menu-item topbar__menu-item--row">
-                  <Icon name="user" size={14} /> Profile
+                  <Icon name="user" size={14} /> {t('topbar.profile')}
                 </button>
                 <button type="button" className="topbar__menu-item topbar__menu-item--row">
-                  <Icon name="shield" size={14} /> Account & security
+                  <Icon name="shield" size={14} /> {t('topbar.accountSecurity')}
                 </button>
                 <button type="button" className="topbar__menu-item topbar__menu-item--row">
-                  <Icon name="cog" size={14} /> Preferences
+                  <Icon name="cog" size={14} /> {t('topbar.preferences')}
                 </button>
                 <div className="topbar__menu-sep" />
                 <button type="button" onClick={handleSignOut} className="topbar__menu-item topbar__menu-item--row topbar__menu-item--danger">
-                  <Icon name="logout" size={14} /> Sign out
+                  <Icon name="logout" size={14} /> {t('topbar.signOut')}
                 </button>
               </motion.div>
             )}

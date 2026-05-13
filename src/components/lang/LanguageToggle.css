@@ -1,0 +1,111 @@
+/* ============================================================
+   Language toggle — topbar pill + popover (mirrors ThemeToggle)
+   ============================================================ */
+.lang-toggle { position: relative; }
+
+.lang-toggle__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: 50px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-strong);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.lang-toggle__btn:hover { border-color: var(--gold-500); }
+.lang-toggle__btn.is-open {
+  background: var(--surface-raised);
+  border-color: var(--gold-500);
+}
+.lang-toggle__short { line-height: 1; }
+
+.lang-toggle__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow:
+    0 24px 60px rgba(6, 18, 48, 0.18),
+    0 2px 4px rgba(6, 18, 48, 0.04);
+  z-index: 40;
+  overflow: hidden;
+}
+.lang-toggle__head {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.lang-toggle__head strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-strong);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.lang-toggle__head small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+.lang-toggle__menu ul { list-style: none; margin: 0; padding: 6px; display: grid; gap: 2px; }
+.lang-toggle__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 9px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.lang-toggle__item:hover { background: var(--surface-raised); }
+.lang-toggle__item.is-active {
+  border-color: var(--gold-500);
+  background: linear-gradient(180deg, rgba(201, 165, 92, 0.06), var(--surface));
+}
+.lang-toggle__code {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-strong);
+  flex-shrink: 0;
+}
+.lang-toggle__item.is-active .lang-toggle__code {
+  background: var(--gold-500);
+  color: var(--navy-900);
+  border-color: var(--gold-500);
+}
+.lang-toggle__label {
+  flex: 1;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-strong);
+}
+.lang-toggle__item svg { color: var(--gold-600); }
+
+/* Mobile: hide the standalone toggle — language lives in the More popover */
+@media (max-width: 720px) {
+  .lang-toggle { display: none; }
+}

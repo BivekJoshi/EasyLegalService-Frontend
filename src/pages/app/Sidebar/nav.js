@@ -2,62 +2,58 @@
    Sidebar menu config.
    ----
    Schema:
-     { id, label, icon?, badge?, to?, end?, disabled?, children? }
+     { id, labelKey, sectionKey, icon?, badge?, to?, end?, disabled?, children? }
    • Leaf:  has `to` (and optionally `end` for exact match).
    • Group: has `children` instead of `to`. A group is purely
             expandable — its first child should be the canonical
             "All …" route so the section still has an entry point.
-   • Either kind may have `badge`, `icon`, or `disabled`.
-
-   To add a new item, edit this file — components below auto-render.
+   • `labelKey` resolves through react-i18next so menu items
+     translate automatically (English ↔ Nepali ↔ etc.).
    ============================================================ */
 export const SECTIONS = [
   {
-    label: 'Workspace',
+    sectionKey: 'section.workspace',
     items: [
-      { id: 'overview', to: '/app',          label: 'Overview', icon: 'grid',      end: true },
-      { id: 'clients',  to: '/app/clients',  label: 'Clients',  icon: 'users' },
-      { id: 'cases',    to: '/app/cases',    label: 'Cases',    icon: 'briefcase' },
+      { id: 'overview', to: '/app',          labelKey: 'nav.overview', icon: 'grid',      end: true },
+      { id: 'clients',  to: '/app/clients',  labelKey: 'nav.clients',  icon: 'users' },
+      { id: 'cases',    to: '/app/cases',    labelKey: 'nav.cases',    icon: 'briefcase' },
       {
         id: 'documents',
-        label: 'Documents',
+        labelKey: 'nav.documents',
         icon: 'file',
         badge: '3',
         children: [
-          { id: 'docs-all',       to: '/app/documents', label: 'All documents', end: true },
-          { id: 'docs-templates', label: 'Templates',   disabled: true },
-          { id: 'docs-drafts',    label: 'Drafts',      disabled: true, badge: '2' },
+          { id: 'docs-all',       to: '/app/documents', labelKey: 'nav.allDocuments', end: true },
+          { id: 'docs-templates', labelKey: 'nav.templates', disabled: true },
+          { id: 'docs-drafts',    labelKey: 'nav.drafts',    disabled: true, badge: '2' },
         ],
       },
     ],
   },
   {
-    label: 'Resources',
+    sectionKey: 'section.resources',
     items: [
       {
         id: 'library',
-        label: 'Library',
+        labelKey: 'nav.library',
         icon: 'bookmark',
         children: [
-          { id: 'lib-snippets', label: 'Snippets', disabled: true },
-          { id: 'lib-forms',    label: 'Forms',    disabled: true },
+          { id: 'lib-snippets', labelKey: 'nav.snippets', disabled: true },
+          { id: 'lib-forms',    labelKey: 'nav.forms',    disabled: true },
         ],
       },
-      { id: 'inbox', label: 'Inbox', icon: 'inbox', disabled: true, badge: '12' },
+      { id: 'inbox', labelKey: 'nav.inbox', icon: 'inbox', disabled: true, badge: '12' },
     ],
   },
   {
-    label: 'Account',
+    sectionKey: 'section.account',
     items: [
-      { id: 'settings', label: 'Settings', icon: 'cog',            disabled: true },
-      { id: 'help',     label: 'Help',     icon: 'questionCircle', disabled: true },
+      { id: 'settings', labelKey: 'nav.settings', icon: 'cog',            disabled: true },
+      { id: 'help',     labelKey: 'nav.help',     icon: 'questionCircle', disabled: true },
     ],
   },
 ]
 
-/* Walks an item (and its descendants) — true if any leaf's `to`
- * matches the given pathname. Used by NavGroup to highlight
- * itself and auto-open when one of its children is active. */
 export function containsActivePath(item, pathname) {
   if (item.to) {
     if (item.end) return pathname === item.to

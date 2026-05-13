@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import Icon from '../../../components/ui/Icon'
 import { containsActivePath } from './nav'
 
@@ -138,6 +139,8 @@ function NavGroup({ item, depth, collapsed }) {
    Link inner row (shared between leaf + group head)
    ============================================================ */
 function LinkInner({ item, depth, isGroup }) {
+  const { t } = useTranslation()
+  const label = item.labelKey ? t(item.labelKey) : item.label
   return (
     <span className="sidebar__link-content">
       {depth > 0 && <span className="sidebar__link-bullet" aria-hidden />}
@@ -146,7 +149,7 @@ function LinkInner({ item, depth, isGroup }) {
           <Icon name={item.icon} size={depth > 0 ? 14 : 18} />
         </span>
       )}
-      <span className="sidebar__link-text">{item.label}</span>
+      <span className="sidebar__link-text">{label}</span>
       {item.badge && <span className="sidebar__badge">{item.badge}</span>}
 
       {isGroup ? (
@@ -167,9 +170,11 @@ function LinkInner({ item, depth, isGroup }) {
    Groups render <Flyout/> instead, which shows their children.
    ============================================================ */
 function Tooltip({ item }) {
+  const { t } = useTranslation()
+  const label = item.labelKey ? t(item.labelKey) : item.label
   return (
     <span className="sidebar__tooltip" aria-hidden>
-      {item.label}
+      {label}
       {item.badge && <em>· {item.badge}</em>}
     </span>
   )
@@ -179,9 +184,11 @@ function Tooltip({ item }) {
    Flyout — child list for collapsed groups (hover-revealed)
    ============================================================ */
 function Flyout({ item }) {
+  const { t } = useTranslation()
+  const label = item.labelKey ? t(item.labelKey) : item.label
   return (
-    <span className="sidebar__flyout" role="menu" aria-label={item.label}>
-      <strong className="sidebar__flyout-title">{item.label}</strong>
+    <span className="sidebar__flyout" role="menu" aria-label={label}>
+      <strong className="sidebar__flyout-title">{label}</strong>
       <ul>
         {item.children.map((child) => (
           <li key={child.id}>
@@ -208,10 +215,12 @@ function Flyout({ item }) {
 }
 
 function FlyoutInner({ child }) {
+  const { t } = useTranslation()
+  const label = child.labelKey ? t(child.labelKey) : child.label
   return (
     <>
       {child.icon && <Icon name={child.icon} size={14} />}
-      <span>{child.label}</span>
+      <span>{label}</span>
       {child.badge && (
         <span className="sidebar__badge sidebar__badge--soft">{child.badge}</span>
       )}

@@ -1,0 +1,117 @@
+{
+  "brand": {
+    "name": "Easy Legal",
+    "workspace": "Counsel workspace",
+    "tier": "Pro"
+  },
+  "sidebar": {
+    "quickSearch": "Quick search…",
+    "collapse": "Collapse",
+    "expand": "Expand"
+  },
+  "section": {
+    "workspace": "Workspace",
+    "resources": "Resources",
+    "account": "Account"
+  },
+  "nav": {
+    "overview": "Overview",
+    "clients": "Clients",
+    "cases": "Cases",
+    "documents": "Documents",
+    "library": "Library",
+    "inbox": "Inbox",
+    "settings": "Settings",
+    "help": "Help",
+    "templates": "Templates",
+    "drafts": "Drafts",
+    "snippets": "Snippets",
+    "forms": "Forms",
+    "allDocuments": "All documents"
+  },
+  "page": {
+    "overview":   { "title": "Overview",         "eyebrow": "Dashboard" },
+    "clients":    { "title": "Client Records",   "eyebrow": "Data entry" },
+    "cases":      { "title": "Matters & Cases",  "eyebrow": "Data entry" },
+    "documents":  { "title": "Documents",        "eyebrow": "PDF generation" },
+    "workspace":  { "title": "Workspace",        "eyebrow": "" }
+  },
+  "topbar": {
+    "searchPlaceholder": "Search clients, cases, documents…",
+    "create": "New",
+    "moreActions": "More actions",
+    "notifications": "Notifications",
+    "markAllRead": "Mark all read",
+    "viewAll": "View all activity",
+    "profile": "Profile",
+    "accountSecurity": "Account & security",
+    "preferences": "Preferences",
+    "signOut": "Sign out",
+    "quickCreate": "Quick create",
+    "newClient": "New client",
+    "newClientHint": "Capture KYC",
+    "newMatter": "New matter",
+    "newMatterHint": "Brief, jurisdiction",
+    "newDocument": "New document",
+    "newDocumentHint": "From template"
+  },
+  "theme": {
+    "title": "Workspace theme",
+    "subtitle": "Applied across your chamber",
+    "dark": "Dark",
+    "parchment":  { "name": "Parchment", "description": "Warm cream paper, navy ink, gold accents." },
+    "midnight":   { "name": "Midnight",  "description": "Deep navy night with brass highlights." },
+    "slate":      { "name": "Slate",     "description": "Cool minimalist greys for focused work." },
+    "sepia":      { "name": "Sepia",     "description": "Vintage warm tones with library feel." }
+  },
+  "lang": {
+    "title": "Language",
+    "subtitle": "Workspace language",
+    "english": "English",
+    "nepali":  "नेपाली (Nepali)",
+    "switchTo": "Switch language"
+  },
+  "bottomNav": {
+    "home": "Home",
+    "clients": "Clients",
+    "cases": "Cases",
+    "docs": "Docs",
+    "search": "Search"
+  },
+  "cmdk": {
+    "placeholder": "Search clients, cases, documents, or jump to a page…",
+    "noMatches": "No matches for “{{query}}”",
+    "noMatchesHint": "Try a different keyword — search covers titles, IDs, and tags.",
+    "navigate": "navigate",
+    "select": "select",
+    "close": "close",
+    "results_one": "{{count}} result",
+    "results_other": "{{count}} results",
+    "section": {
+      "page": "Pages",
+      "action": "Actions",
+      "client": "Clients",
+      "case": "Cases",
+      "document": "Documents"
+    },
+    "actions": {
+      "newClientTitle": "New client",
+      "newClientHint": "Open the client intake form",
+      "newCaseTitle": "New matter",
+      "newCaseHint": "Open a case",
+      "newDocTitle": "Generate document",
+      "newDocHint": "From a template",
+      "signOutTitle": "Sign out",
+      "signOutHint": "End your session"
+    },
+    "pageSubtitle": {
+      "overview": "Dashboard home",
+      "clients": "Client records",
+      "cases": "Matters & cases",
+      "documents": "PDFs & templates"
+    }
+  },
+  "common": {
+    "backToSite": "Back to site"
+  }
+}
