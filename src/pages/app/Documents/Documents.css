@@ -1,0 +1,79 @@
+/* ============================================================
+   Documents page — local styles
+   Lifts the per-element inline styles into proper classes so
+   the JSX stays clean and the layout themes correctly.
+   ============================================================ */
+
+/* List view */
+.docs-filter-label {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+.cell-avatar.docs-pdf-avatar {
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-300));
+  color: var(--navy-900);
+}
+.docs-row-actions { text-align: right; }
+
+/* Form view */
+.docs-selected { color: var(--text-strong); }
+.docs-step2-head {
+  margin-top: 1.75rem;
+  margin-bottom: 1rem;
+}
+.docs-textarea-control { align-items: flex-start; }
+.docs-textarea-icon { margin-top: 14px; }
+.docs-textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  padding: 13px 0;
+  resize: vertical;
+  color: inherit;
+  min-width: 0;
+}
+
+/* Live preview pane */
+.docs-preview-card {
+  position: sticky;
+  top: calc(var(--topbar-h) + 1.5rem);
+  align-self: start;
+}
+.docs-preview {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem;
+  min-height: 320px;
+  font-family: var(--font-serif);
+  color: var(--text);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+.docs-preview-empty { padding: 2rem 0; }
+.docs-preview-title {
+  text-align: center;
+  font-weight: 700;
+  color: var(--text-strong);
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.docs-preview-body {
+  color: var(--ink-2);
+  margin: 0;
+}
+.docs-preview-subject { margin-top: 1rem; }
+.docs-preview-em {
+  color: var(--text-strong);
+  font-style: italic;
+}
+.docs-preview-foot {
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-style: italic;
+}
