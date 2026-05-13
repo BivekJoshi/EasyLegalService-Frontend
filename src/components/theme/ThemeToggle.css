@@ -1,0 +1,185 @@
+/* ============================================================
+   Theme toggle — topbar palette button with theme cards popover
+   ============================================================ */
+.theme-toggle { position: relative; }
+
+/* -------- Trigger button -------- */
+.theme-toggle__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 10px 0 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-strong);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.theme-toggle__btn:hover { border-color: var(--gold-500); }
+.theme-toggle__btn.is-open {
+  background: var(--surface-raised);
+  border-color: var(--gold-500);
+}
+.theme-toggle__btn > svg { color: var(--gold-600); flex-shrink: 0; }
+
+.theme-toggle__swatches {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+}
+.theme-toggle__swatches > span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* -------- Popover -------- */
+.theme-toggle__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 340px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow:
+    0 24px 60px rgba(6, 18, 48, 0.18),
+    0 2px 4px rgba(6, 18, 48, 0.04);
+  z-index: 40;
+  overflow: hidden;
+}
+
+.theme-toggle__head {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.theme-toggle__head strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-strong);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.theme-toggle__head small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.theme-toggle__grid {
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+/* -------- Card -------- */
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 11px;
+  background: transparent;
+  border: 1.5px solid transparent;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.theme-card:hover {
+  background: var(--surface-raised);
+  transform: translateY(-1px);
+}
+.theme-card.is-active {
+  border-color: var(--gold-500);
+  background: linear-gradient(180deg, rgba(201, 165, 92, 0.06), var(--surface));
+  box-shadow: 0 0 0 4px rgba(201, 165, 92, 0.1);
+}
+
+.theme-card__preview {
+  position: relative;
+  height: 62px;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: block;
+}
+.theme-card__preview[data-mood="dark"] { border-color: rgba(255, 255, 255, 0.1); }
+.theme-card__bar {
+  position: absolute;
+  inset: 0;
+}
+.theme-card__chip {
+  position: absolute;
+  border-radius: 999px;
+}
+.theme-card__chip--a {
+  top: 10px; left: 10px;
+  width: 22px; height: 6px;
+}
+.theme-card__chip--b {
+  top: 24px; left: 10px;
+  width: 36px; height: 5px;
+  border-radius: 3px;
+}
+.theme-card__chip--c {
+  top: 35px; left: 10px;
+  width: 28px; height: 5px;
+  border-radius: 3px;
+}
+
+.theme-card__meta { min-width: 0; }
+.theme-card__name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-strong);
+  margin-bottom: 2px;
+}
+.theme-card__meta small {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.theme-card__tick {
+  margin-left: auto;
+  color: var(--gold-600);
+  flex-shrink: 0;
+}
+.theme-card__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(28, 58, 122, 0.12);
+  color: var(--navy-700);
+  line-height: 1.4;
+}
+[data-theme="midnight"] .theme-card__pill {
+  background: rgba(216, 185, 122, 0.18);
+  color: var(--gold-300);
+}
+
+/* -------- Mobile -------- */
+@media (max-width: 640px) {
+  .theme-toggle__swatches { display: none; }
+  .theme-toggle__btn { padding: 0; width: 40px; justify-content: center; }
+  .theme-toggle__menu { min-width: 280px; right: -1rem; }
+}

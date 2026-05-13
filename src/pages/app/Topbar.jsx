@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import Icon from '../../components/ui/Icon'
 import { useAuth } from '../../auth/useAuth'
 import { useSearch } from '../../components/search/useSearch'
+import ThemeToggle from '../../components/theme/ThemeToggle'
 import './Topbar.css'
 
 const TITLES = {
@@ -152,6 +153,9 @@ export default function Topbar({ onToggleSidebar }) {
             )}
           </AnimatePresence>
         </div>
+
+        {/* Theme toggle (post-login, global across the dashboard) */}
+        <ThemeToggle />
 
         {/* Notifications */}
         <div className="topbar__pop">

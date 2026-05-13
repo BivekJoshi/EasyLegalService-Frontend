@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { useAuth } from '../../auth/useAuth'
 import SearchProvider from '../../components/search/SearchProvider'
+import ThemeProvider from '../../components/theme/ThemeProvider'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 import './AppLayout.css'
@@ -36,33 +37,35 @@ export default function AppLayout() {
   }
 
   return (
-    <SearchProvider>
-      <div className={`app ${collapsed ? 'app--collapsed' : ''} ${drawerOpen ? 'app--drawer' : ''}`}>
-        <Sidebar
-          collapsed={collapsed}
-          onToggleCollapse={() => setCollapsed((v) => !v)}
-          onSignOut={handleSignOut}
-        />
+    <ThemeProvider>
+      <SearchProvider>
+        <div className={`app ${collapsed ? 'app--collapsed' : ''} ${drawerOpen ? 'app--drawer' : ''}`}>
+          <Sidebar
+            collapsed={collapsed}
+            onToggleCollapse={() => setCollapsed((v) => !v)}
+            onSignOut={handleSignOut}
+          />
 
-        <AnimatePresence>
-          {drawerOpen && (
-            <motion.div
-              className="app__scrim"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setDrawerOpen(false)}
-            />
-          )}
-        </AnimatePresence>
+          <AnimatePresence>
+            {drawerOpen && (
+              <motion.div
+                className="app__scrim"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setDrawerOpen(false)}
+              />
+            )}
+          </AnimatePresence>
 
-        <div className="app__main">
-          <Topbar onToggleSidebar={() => setDrawerOpen((v) => !v)} />
-          <main className="app__content" key={pathname}>
-            <Outlet />
-          </main>
+          <div className="app__main">
+            <Topbar onToggleSidebar={() => setDrawerOpen((v) => !v)} />
+            <main className="app__content" key={pathname}>
+              <Outlet />
+            </main>
+          </div>
         </div>
-      </div>
-    </SearchProvider>
+      </SearchProvider>
+    </ThemeProvider>
   )
 }

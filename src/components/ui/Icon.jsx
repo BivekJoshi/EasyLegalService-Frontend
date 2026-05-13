@@ -265,6 +265,22 @@ const PATHS = {
       <path d="M3 13v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-6l-2 2h-4l-2-2H3z" />
     </>
   ),
+  palette: (
+    <>
+      <path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-1 2-2 0-.6-.2-1-.5-1.4-.3-.4-.5-.8-.5-1.4 0-1 .8-1.7 1.7-1.7H17a4 4 0 0 0 4-4c0-4.4-4-7.5-9-7.5z" />
+      <circle cx="7.5" cy="11" r="1" />
+      <circle cx="10.5" cy="7.5" r="1" />
+      <circle cx="15" cy="7.5" r="1" />
+      <circle cx="17.5" cy="11" r="1" />
+    </>
+  ),
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </>
+  ),
+  moon: <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />,
 }
 
 export default function Icon({ name, size, stroke = 2, fill = 'none', className = '' }) {

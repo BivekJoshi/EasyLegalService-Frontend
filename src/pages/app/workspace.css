@@ -23,8 +23,8 @@
   font-size: 0.86rem;
 }
 .btn--soft {
-  background: #fff;
-  color: var(--navy-900);
+  background: var(--surface);
+  color: var(--text-strong);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-xs);
 }
@@ -36,7 +36,7 @@
 
 /* -------- Card -------- */
 .card {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line-2);
   border-radius: var(--radius);
   box-shadow: var(--shadow-xs);
@@ -53,7 +53,7 @@
   font-size: 1rem;
   font-family: var(--font-sans);
   font-weight: 700;
-  color: var(--navy-900);
+  color: var(--text-strong);
   letter-spacing: 0;
   margin: 0;
 }
@@ -67,7 +67,7 @@
   margin-bottom: 1.5rem;
 }
 .kpi {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line-2);
   border-radius: var(--radius);
   padding: 1.1rem 1.25rem;
@@ -101,7 +101,7 @@
 .kpi__value {
   font-family: var(--font-serif);
   font-size: 2rem;
-  color: var(--navy-900);
+  color: var(--text-strong);
   line-height: 1.1;
   letter-spacing: -0.015em;
   margin-bottom: 0.35rem;
@@ -128,7 +128,7 @@
 
 /* -------- Table -------- */
 .table-wrap {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line-2);
   border-radius: var(--radius);
   overflow: hidden;
@@ -202,7 +202,7 @@ table.t td {
   vertical-align: middle;
 }
 table.t tr:last-child td { border-bottom: none; }
-table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
+table.t tr:hover td { background: var(--surface-raised); }
 
 .cell-primary { display: flex; align-items: center; gap: 10px; }
 .cell-avatar {
@@ -216,7 +216,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
-.cell-meta strong { display: block; color: var(--navy-900); font-weight: 600; font-size: 0.92rem; }
+.cell-meta strong { display: block; color: var(--text-strong); font-weight: 600; font-size: 0.92rem; }
 .cell-meta small  { display: block; color: var(--muted); font-size: 0.78rem; }
 
 /* -------- Badges -------- */
@@ -249,7 +249,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
   color: var(--muted);
   transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
 }
-.row-action:hover { color: var(--navy-900); background: var(--paper); }
+.row-action:hover { color: var(--text-strong); background: var(--paper); }
 
 /* -------- Empty state -------- */
 .empty {
@@ -258,7 +258,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
   color: var(--muted);
 }
 .empty svg { color: var(--gold-500); margin: 0 auto 0.75rem; }
-.empty h3 { color: var(--navy-900); margin-bottom: 0.4rem; font-size: 1.1rem; font-family: var(--font-sans); }
+.empty h3 { color: var(--text-strong); margin-bottom: 0.4rem; font-size: 1.1rem; font-family: var(--font-sans); }
 .empty p  { margin: 0 0 1rem; }
 
 /* -------- Stack form -------- */
@@ -296,7 +296,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
   transition: all var(--dur) var(--ease);
 }
 .quick-action:hover {
-  background: #fff;
+  background: var(--surface);
   border-color: var(--line);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
@@ -311,7 +311,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
 }
 .quick-action__meta strong {
   display: block;
-  color: var(--navy-900);
+  color: var(--text-strong);
   font-size: 0.92rem;
   margin-bottom: 1px;
 }
@@ -335,7 +335,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
   flex-shrink: 0;
 }
 .activity__body { flex: 1; min-width: 0; }
-.activity__body strong { display: block; color: var(--navy-900); font-size: 0.92rem; font-weight: 600; }
+.activity__body strong { display: block; color: var(--text-strong); font-size: 0.92rem; font-weight: 600; }
 .activity__body p { margin: 2px 0 0; color: var(--ink-2); font-size: 0.86rem; }
 .activity__time { color: var(--muted); font-size: 0.78rem; white-space: nowrap; }
 
@@ -346,7 +346,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
   gap: 0.9rem;
 }
 .template {
-  background: #fff;
+  background: var(--surface);
   border: 1.5px solid var(--line-2);
   border-radius: var(--radius);
   padding: 1rem;
@@ -363,7 +363,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
 }
 .template.is-selected {
   border-color: var(--navy-800);
-  background: linear-gradient(180deg, rgba(201, 165, 92, 0.04), #fff);
+  background: linear-gradient(180deg, rgba(201, 165, 92, 0.04), var(--surface));
   box-shadow: 0 0 0 4px rgba(28, 58, 122, 0.06);
 }
 .template__icon {
@@ -376,7 +376,7 @@ table.t tr:hover td { background: rgba(247, 243, 231, 0.5); }
 }
 .template strong {
   display: block;
-  color: var(--navy-900);
+  color: var(--text-strong);
   font-size: 0.95rem;
   margin-bottom: 2px;
 }

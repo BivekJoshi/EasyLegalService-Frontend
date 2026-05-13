@@ -6,7 +6,7 @@
   top: 0;
   z-index: 20;
   min-height: var(--topbar-h);
-  background: rgba(247, 243, 231, 0.78);
+  background: var(--topbar-bg);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   border-bottom: 1px solid var(--line);
@@ -20,7 +20,7 @@
   display: none;
   width: 40px; height: 40px;
   border-radius: 10px;
-  color: var(--navy-900);
+  color: var(--text-strong);
   align-items: center;
   justify-content: center;
   transition: background var(--dur) var(--ease);
@@ -50,7 +50,7 @@
 .topbar__title {
   font-size: 1.18rem;
   font-family: var(--font-serif);
-  color: var(--navy-900);
+  color: var(--text-strong);
   margin: 0;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -69,7 +69,7 @@
   align-items: center;
   gap: 10px;
   height: 40px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0 14px;
@@ -115,7 +115,7 @@
   padding: 0 16px;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
-  color: var(--navy-900);
+  color: var(--text-strong);
   font-weight: 600;
   font-size: 0.88rem;
   box-shadow: 0 8px 22px rgba(201, 165, 92, 0.32);
@@ -136,13 +136,13 @@
   position: relative;
   width: 40px; height: 40px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   color: var(--navy-800);
   display: grid; place-items: center;
   transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.topbar__icon-btn:hover { border-color: var(--gold-500); color: var(--navy-900); }
+.topbar__icon-btn:hover { border-color: var(--gold-500); color: var(--text-strong); }
 .topbar__count {
   position: absolute;
   top: 4px; right: 4px;
@@ -155,7 +155,7 @@
   font-size: 0.66rem;
   font-weight: 700;
   display: grid; place-items: center;
-  box-shadow: 0 0 0 2px #fff;
+  box-shadow: 0 0 0 2px var(--surface);
   letter-spacing: 0;
   line-height: 1;
 }
@@ -166,7 +166,7 @@
   align-items: center;
   gap: 10px;
   padding: 4px 12px 4px 4px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 999px;
   transition: border-color var(--dur) var(--ease);
@@ -190,7 +190,7 @@
   border-radius: 12px;
 }
 .topbar__user-meta { display: grid; gap: 1px; text-align: left; }
-.topbar__user-meta strong { font-size: 0.82rem; color: var(--navy-900); line-height: 1.1; }
+.topbar__user-meta strong { font-size: 0.82rem; color: var(--text-strong); line-height: 1.1; }
 .topbar__user-meta small { font-size: 0.68rem; color: var(--muted); line-height: 1.1; }
 
 /* -------- Popovers (shared) -------- */
@@ -200,7 +200,7 @@
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: 0 24px 60px rgba(6, 18, 48, 0.18),
@@ -251,7 +251,7 @@
   flex-shrink: 0;
 }
 .topbar__menu-meta { flex: 1; min-width: 0; }
-.topbar__menu-meta strong { display: block; color: var(--navy-900); font-size: 0.92rem; }
+.topbar__menu-meta strong { display: block; color: var(--text-strong); font-size: 0.92rem; }
 .topbar__menu-meta small  { display: block; color: var(--muted);    font-size: 0.78rem; }
 .topbar__menu-arrow { color: var(--muted); flex-shrink: 0; transition: transform var(--dur) var(--ease); }
 .topbar__menu-item:hover .topbar__menu-arrow { transform: translateX(3px); color: var(--gold-600); }
@@ -263,7 +263,7 @@
   padding: 12px 16px;
   border-bottom: 1px solid var(--line-2);
 }
-.topbar__menu-head strong { font-size: 0.92rem; color: var(--navy-900); font-family: var(--font-sans); }
+.topbar__menu-head strong { font-size: 0.92rem; color: var(--text-strong); font-family: var(--font-sans); }
 .topbar__menu-link {
   background: transparent;
   border: none;
@@ -312,7 +312,7 @@
 .topbar__notif-body strong {
   display: block;
   font-size: 0.86rem;
-  color: var(--navy-900);
+  color: var(--text-strong);
   margin-bottom: 2px;
 }
 .topbar__notif-body p {
@@ -339,7 +339,7 @@
   border-bottom: 1px solid var(--line-2);
   margin-bottom: 6px;
 }
-.topbar__menu-userhead strong { display: block; font-size: 0.92rem; color: var(--navy-900); }
+.topbar__menu-userhead strong { display: block; font-size: 0.92rem; color: var(--text-strong); }
 .topbar__menu-userhead small  { display: block; color: var(--muted); font-size: 0.78rem; }
 .topbar__menu-sep { height: 1px; background: var(--line-2); margin: 6px 4px; }
 

@@ -1,0 +1,89 @@
+/* ============================================================
+   Theme palettes — applied via data-theme on <html>
+   ----
+   The ThemeProvider only mounts inside the dashboard, so these
+   overrides only take effect post-login. Marketing & auth pages
+   never have data-theme set, so they always use the Parchment
+   defaults declared in tokens.css.
+   ============================================================ */
+
+/* -------- Midnight (dark) ---------------------------------- */
+[data-theme="midnight"] {
+  --surface:        #141937;
+  --surface-sunken: #0a0f24;
+  --surface-raised: #1c2249;
+  --text-strong:    #f5f7ff;
+  --text:           #d4dae8;
+  --text-muted:     #8189a8;
+  --border:         #232a4d;
+  --border-soft:    #1d2342;
+
+  --paper:  #0a0f24;
+  --cream:  #1c2249;
+  --ink:    #d4dae8;
+  --ink-2:  #b5bccf;
+  --muted:  #8189a8;
+  --line:   #232a4d;
+  --line-2: #1d2342;
+  --white:  #141937;
+
+  --topbar-bg: rgba(10, 15, 36, 0.82);
+  --scrim:     rgba(0, 0, 0, 0.6);
+}
+
+/* -------- Slate (cool minimalist light) -------------------- */
+[data-theme="slate"] {
+  --surface:        #ffffff;
+  --surface-sunken: #f1f5f9;
+  --surface-raised: #f8fafc;
+  --text-strong:    #0f172a;
+  --text:           #1e293b;
+  --text-muted:     #64748b;
+  --border:         #e2e8f0;
+  --border-soft:    #f1f5f9;
+
+  --paper:  #f1f5f9;
+  --cream:  #f8fafc;
+  --ink:    #1e293b;
+  --ink-2:  #334155;
+  --muted:  #64748b;
+  --line:   #e2e8f0;
+  --line-2: #f1f5f9;
+
+  --topbar-bg: rgba(241, 245, 249, 0.82);
+}
+
+/* -------- Sepia (warm vintage light) ----------------------- */
+[data-theme="sepia"] {
+  --surface:        #fdf6ec;
+  --surface-sunken: #f4ebe0;
+  --surface-raised: #faefdb;
+  --text-strong:    #3c2c1f;
+  --text:           #4a3528;
+  --text-muted:     #8a6e54;
+  --border:         #d8c4a8;
+  --border-soft:    #e8d8be;
+
+  --paper:  #f4ebe0;
+  --cream:  #faefdb;
+  --ink:    #4a3528;
+  --ink-2:  #6b4f3b;
+  --muted:  #8a6e54;
+  --line:   #d8c4a8;
+  --line-2: #e8d8be;
+  --white:  #fdf6ec;
+
+  --topbar-bg: rgba(244, 235, 224, 0.82);
+}
+
+/* -------- Topbar tint per-theme (uses --topbar-bg) --------- */
+[data-theme] .topbar { background: var(--topbar-bg); }
+
+/* -------- Sidebar stays dark in every theme, but bump the
+            active-pill accent slightly outside Parchment for
+            cleaner contrast against the unchanged navy bg. ---- */
+[data-theme="midnight"] .sidebar__active-pill,
+[data-theme="slate"]    .sidebar__active-pill,
+[data-theme="sepia"]    .sidebar__active-pill {
+  background: linear-gradient(90deg, rgba(216, 185, 122, 0.26), rgba(216, 185, 122, 0.05) 90%);
+}

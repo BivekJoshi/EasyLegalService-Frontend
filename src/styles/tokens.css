@@ -12,7 +12,7 @@
   --gold-300: #e6c98a;
   --gold-200: #f0dba7;
 
-  /* Surface */
+  /* Surface (scale tokens — themes override these directly) */
   --cream:   #fdfaf3;
   --paper:   #f7f3e7;
   --ink:     #1a1f2c;
@@ -21,6 +21,19 @@
   --line:    #e7e3d8;
   --line-2:  #efeadd;
   --white:   #ffffff;
+
+  /* Semantic tokens — themes flip these to recolor the dashboard.
+   * Defaults match the Parchment (light) palette. */
+  --surface:        #ffffff;          /* card / elevated surface */
+  --surface-sunken: var(--paper);     /* page background */
+  --surface-raised: var(--cream);     /* hover / highlight */
+  --text-strong:    var(--navy-900);  /* headings + strong text */
+  --text:           var(--ink);       /* body text */
+  --text-muted:     var(--muted);     /* tertiary text */
+  --border:         var(--line);
+  --border-soft:    var(--line-2);
+  --topbar-bg:      rgba(247, 243, 231, 0.78);
+  --scrim:          rgba(6, 18, 48, 0.45);
 
   /* Radius */
   --radius-xs: 6px;
