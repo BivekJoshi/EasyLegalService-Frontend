@@ -281,6 +281,14 @@ const PATHS = {
     </>
   ),
   moon: <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />,
+  printer: (
+    <>
+      <path d="M6 9V3h12v6" />
+      <rect x="3" y="9" width="18" height="9" rx="2" />
+      <rect x="7" y="14" width="10" height="6" rx="1" />
+      <circle cx="17" cy="12" r="0.8" fill="currentColor" />
+    </>
+  ),
 }
 
 export default function Icon({ name, size, stroke = 2, fill = 'none', className = '' }) {

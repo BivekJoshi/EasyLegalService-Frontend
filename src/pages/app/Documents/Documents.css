@@ -21,6 +21,32 @@
   margin-top: 1.75rem;
   margin-bottom: 1rem;
 }
+
+/* Dynamic field rendering (driven by selectedTemplate.fields) */
+.docs-form-section { display: grid; gap: 0.6rem; }
+.docs-form-section + .docs-form-section { margin-top: 1rem; }
+.docs-form-section__title {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border-soft);
+}
+.docs-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+}
+.field-span--full { grid-column: span 2; }
+.field-span--half { grid-column: span 1; }
+
+@media (max-width: 720px) {
+  .docs-form-grid { grid-template-columns: 1fr; }
+  .field-span--full,
+  .field-span--half { grid-column: span 1; }
+}
 .docs-textarea-control { align-items: flex-start; }
 .docs-textarea-icon { margin-top: 14px; }
 .docs-textarea {
@@ -41,6 +67,44 @@
   top: calc(var(--topbar-h) + 1.5rem);
   align-self: start;
 }
+
+/* Toolbar — View / Download / Print */
+.docs-preview-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.docs-preview-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-strong);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease),
+              background var(--dur) var(--ease),
+              color var(--dur) var(--ease);
+}
+.docs-preview-btn:hover {
+  border-color: var(--gold-500);
+  color: var(--gold-600);
+}
+.docs-preview-btn:disabled { opacity: 0.55; cursor: progress; }
+.docs-preview-btn svg { color: var(--gold-600); }
+@media (max-width: 720px) {
+  .docs-preview-btn span { display: none; }
+  .docs-preview-btn { width: 32px; height: 32px; padding: 0; justify-content: center; }
+}
+
+/* Host wrapper — the element captured by html2pdf and printed */
+.docs-preview-host { display: block; }
 .docs-preview {
   background: var(--surface-raised);
   border: 1px solid var(--border-soft);
@@ -76,4 +140,56 @@
   color: var(--text-muted);
   font-size: 0.78rem;
   font-style: italic;
+}
+
+/* ============================================================
+   PDF capture mode — pdfUtils sets data-pdf-capture on <body>
+   for the duration of html2pdf rendering. We force a paper-
+   friendly palette so the saved PDF never carries dark theme.
+   ============================================================ */
+body[data-pdf-capture] .docs-preview-host {
+  --surface:        #ffffff;
+  --surface-sunken: #ffffff;
+  --surface-raised: #f8f5ee;
+  --text-strong:    #061230;
+  --text:           #1a1f2c;
+  --text-muted:     #6b7280;
+  --border:         #d8d4c5;
+  --border-soft:    #e7e3d8;
+  --paper:          #ffffff;
+  --cream:          #f8f5ee;
+  background: #ffffff;
+}
+body[data-pdf-capture] .myaad::before { display: none; }
+
+/* ============================================================
+   Print stylesheet — show ONLY the preview content
+   ============================================================ */
+@media print {
+  /* Force light colours for print regardless of selected theme */
+  :root {
+    --surface:        #ffffff;
+    --surface-sunken: #ffffff;
+    --surface-raised: #f8f5ee;
+    --text-strong:    #000000;
+    --text:           #1a1f2c;
+    --text-muted:     #555555;
+    --border:         #cccccc;
+    --border-soft:    #e0e0e0;
+  }
+  body * { visibility: hidden !important; }
+  .docs-preview-host,
+  .docs-preview-host * { visibility: visible !important; }
+  .docs-preview-host {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 8mm 10mm !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  .docs-preview-card { box-shadow: none !important; border: none !important; }
+  .myaad::before { display: none !important; }
+  @page { margin: 8mm; }
 }
